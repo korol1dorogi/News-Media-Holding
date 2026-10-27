@@ -1,0 +1,87 @@
+{
+  "event": {
+    "id": "ev_dtp_entry",
+    "post_ids": ["p_0012", "p_0015", "p_0018"],
+    "first_ts": "2026-10-27T08:12:00+03:00",
+    "title": "ДТП на северном въезде: столкнулись автобус и грузовик",
+    "geo": "северный въезд",
+    "topic": "ДТП",
+    "scores": { "mash": 0.91, "life": 0.84, "super": 0.31 }
+  },
+  "dossier": {
+    "event_id": "ev_dtp_entry",
+    "level": "green",
+    "first_source_post_id": "p_0012",
+    "independent_sources": 2,
+    "checks": [
+      {
+        "name": "provenance",
+        "status": "ok",
+        "summary": "Первоисточник — «Городской паблик» в 08:12, независимых источников: 2.",
+        "evidence": [{ "post_id": "p_0012", "note": "первая публикация" }]
+      },
+      {
+        "name": "media_archive",
+        "status": "ok",
+        "summary": "Фото не найдено в архиве, похоже на новое.",
+        "evidence": [{ "post_id": "p_0012", "note": "1 фото проверено" }]
+      },
+      {
+        "name": "weather",
+        "status": "n/a",
+        "summary": "На фото не видно погоды, сверять не с чем.",
+        "evidence": []
+      },
+      {
+        "name": "official",
+        "status": "ok",
+        "summary": "ГИБДД подтвердила ДТП в 08:40.",
+        "evidence": [{ "post_id": "p_0018", "note": "официальный канал ГИБДД" }]
+      }
+    ],
+    "todo": ["Уточнить число пострадавших у ГИБДД"]
+  },
+  "posts": [
+    {
+      "id": "p_0012",
+      "channel_id": "ch_city_public",
+      "ts": "2026-10-27T08:12:00+03:00",
+      "text": "ДТП на северном въезде: автобус столкнулся с грузовиком, трое пострадавших.",
+      "url": "https://example.invalid/ch_city_public/12",
+      "media": ["dtp_entry_1.jpg"],
+      "forward_from": null,
+      "geo": "северный въезд",
+      "topic": "ДТП"
+    },
+    {
+      "id": "p_0015",
+      "channel_id": "ch_district_news",
+      "ts": "2026-10-27T08:16:00+03:00",
+      "text": "ДТП на северном въезде: автобус столкнулся с грузовиком, трое пострадавших.",
+      "url": "https://example.invalid/ch_district_news/15",
+      "media": ["dtp_entry_1.jpg"],
+      "forward_from": "p_0012",
+      "geo": "северный въезд",
+      "topic": "ДТП"
+    },
+    {
+      "id": "p_0018",
+      "channel_id": "ch_gibdd",
+      "ts": "2026-10-27T08:40:00+03:00",
+      "text": "На северном въезде столкнулись автобус и грузовик. Пострадали три человека, движение затруднено.",
+      "url": "https://example.invalid/ch_gibdd/18",
+      "media": [],
+      "forward_from": null,
+      "geo": "северный въезд",
+      "topic": "ДТП"
+    }
+  ],
+  "graph": {
+    "nodes": [
+      { "id": "p_0012", "channel_id": "ch_city_public", "ts": "2026-10-27T08:12:00+03:00" },
+      { "id": "p_0015", "channel_id": "ch_district_news", "ts": "2026-10-27T08:16:00+03:00" },
+      { "id": "p_0018", "channel_id": "ch_gibdd", "ts": "2026-10-27T08:40:00+03:00" }
+    ],
+    "edges": [{ "from": "p_0012", "to": "p_0015", "kind": "forward" }]
+  }
+}

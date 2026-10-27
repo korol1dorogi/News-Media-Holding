@@ -1,0 +1,26 @@
+{
+  "event_id": "ev_dtp_entry",
+  "outlet": "mash",
+  "text": "На северном въезде в город автобус влетел в грузовик. Пострадали пять человек, движение затруднено. В ГИБДД подтвердили аварию.",
+  "claims": [
+    {
+      "text": "северный въезд",
+      "kind": "place",
+      "source_post_ids": ["p_0012", "p_0018"],
+      "supported": true
+    },
+    {
+      "text": "пять человек",
+      "kind": "number",
+      "source_post_ids": [],
+      "supported": false
+    },
+    {
+      "text": "ГИБДД",
+      "kind": "name",
+      "source_post_ids": ["p_0018"],
+      "supported": true
+    }
+  ],
+  "warnings": ["Не подтверждено источниками: «пять человек» — в постах указано трое пострадавших."]
+}

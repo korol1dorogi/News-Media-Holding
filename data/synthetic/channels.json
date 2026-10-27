@@ -1,0 +1,5 @@
+[
+  {"id": "ch_city_public", "title": "Городской паблик (синтетика)", "kind": "public", "region": "demo-city"},
+  {"id": "ch_gibdd", "title": "ГИБДД города (синтетика)", "kind": "official", "region": "demo-city"},
+  {"id": "ch_reader_bot", "title": "Бот читателей (синтетика)", "kind": "reader_bot", "region": "demo-city"}
+]

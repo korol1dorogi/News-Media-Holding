@@ -1,0 +1,14 @@
+# Мини-набор для тестов каркаса. Город и каналы вымышленные, данные синтетические.
+# m_005 — пересылка m_004, m_006 — копия m_004 без пересылки (тот же источник).
+# m_007, m_008 — шум.
+events:
+  - key: dtp_entry
+    post_ids: [m_001, m_002, m_003]
+    first_source: m_001
+    expected_level: green
+  - key: flood_old_photo
+    post_ids: [m_004, m_005, m_006]
+    first_source: m_004
+    independent_sources: 1
+    expected_level: red
+    expected_fail: media_archive

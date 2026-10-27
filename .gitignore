@@ -1,0 +1,23 @@
+# secrets
+.env
+
+# python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# runtime
+var/
+
+# frontend
+node_modules/
+frontend/dist/
+
+# editors and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
