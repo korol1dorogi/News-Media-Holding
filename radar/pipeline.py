@@ -37,7 +37,7 @@ def run(data_dir: Path) -> list[Event]:
 
 
 def process(data_dir: Path, profiles_dir: Path = PROFILES_DIR) -> Result:
-    # TODO(L3): end-to-end run on synthetic data; drafts stay on demand (button in the UI).
+    # Drafts are not generated here: the LLM runs only on the editor's button.
     channels, posts = load_replay(data_dir)
     posts = [enrich(post) for post in posts]
     profiles = load_profiles(profiles_dir)
