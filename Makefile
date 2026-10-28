@@ -14,7 +14,7 @@ PY := $(BIN)/python
 -include .env
 DB_PATH := $(or $(DB_PATH),var/radar.sqlite3)
 
-.PHONY: setup check fmt run gen-data eval reset clean-clone
+.PHONY: setup check fmt run gen-data eval eval-hard reset clean-clone
 
 setup:
 	test -d $(VENV) || $(PYTHON) -m venv $(VENV)
@@ -44,6 +44,11 @@ gen-data:
 
 eval:
 	$(PY) scripts/eval.py
+
+# Hard synthetic data (S3): tricky fakes, honest failures in reports/hard/.
+eval-hard:
+	$(PY) scripts/gen_synthetic_hard.py
+	$(PY) scripts/eval.py --data data/synthetic_hard --out reports/hard
 
 reset:
 	rm -f $(DB_PATH)

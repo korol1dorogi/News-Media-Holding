@@ -22,7 +22,7 @@
 | L3 | radar/pipeline.py, radar/storage.py | все Must-модули | make run поднимает всё, /api/replay/reset пересобирает базу | готово (в main) |
 | S1 | scripts/gen_synthetic.py, data/synthetic/* | контракт | генератор детерминирован, все события демо-сценария в truth.yaml | готово (#6) |
 | S2 | scripts/eval.py, reports/* (кроме reports/hard/ и reports/redteam.md) | S1, L3 | make eval пишет reports/metrics.json и metrics.md; максимум — в карточке | готово (в main) |
-| S3 | scripts/gen_synthetic_hard.py, data/synthetic_hard/*, reports/hard/* | S1, S2 | хитрые фейки во втором городе, свой truth.yaml, отчёт S2 по ним в reports/hard/ | не начато |
+| S3 | scripts/gen_synthetic_hard.py, data/synthetic_hard/*, reports/hard/* | S1, S2 | хитрые фейки во втором городе, свой truth.yaml, отчёт S2 по ним в reports/hard/ | готово (в main): 6 из 10 уровней, провалы в reports/hard/findings.md |
 | C1 | radar/normalize/* | контракт | geo и topic совпадают с ожиданием на 20 постах | готово (#7) |
 | C2 | radar/cluster/* | C1 | каждое событие truth.yaml собрано в один кластер | готово (#8) |
 | C3 | radar/score/*, data/profiles/* | C2 | шум ниже событий, порядок для mash и life различается | готово (#9) |
