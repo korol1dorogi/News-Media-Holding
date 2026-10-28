@@ -104,3 +104,33 @@ export interface ResetResult {
 
 // GET /api/metrics: reports/metrics.json as is, or {}
 export type Metrics = Record<string, unknown>;
+
+// POST /api/events/{id}/publish (L4)
+export interface Publication {
+  event_id: string;
+  outlet: Outlet;
+  published_at: string;
+}
+
+// GET /api/alerts (V5): official posts about published events after publication
+export interface Alert {
+  event_id: string;
+  outlet: string;
+  kind: "denial" | "update";
+  post_id: string;
+  ts: string;
+  summary: string;
+}
+
+// GET /api/replay/stream?until=ISO&outlet= (L4): the feed at a model time
+export interface StreamItem extends EventListItem {
+  rose_at: string;
+  minutes_to_signal: number;
+}
+
+export interface ReplayStream {
+  start: string;
+  end: string;
+  until: string;
+  events: StreamItem[];
+}

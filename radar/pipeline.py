@@ -5,6 +5,7 @@ from __future__ import annotations
 import dataclasses
 import json
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -36,9 +37,16 @@ def run(data_dir: Path) -> list[Event]:
     return process(Path(data_dir)).events
 
 
-def process(data_dir: Path, profiles_dir: Path = PROFILES_DIR) -> Result:
+def process(
+    data_dir: Path,
+    profiles_dir: Path = PROFILES_DIR,
+    until: datetime | None = None,
+) -> Result:
+    """until cuts the replay at a model time: the feed as the editor saw it at that moment."""
     # Drafts are not generated here: the LLM runs only on the editor's button.
     channels, posts = load_replay(data_dir)
+    if until is not None:
+        posts = [post for post in posts if post.ts <= until]
     posts = [enrich(post) for post in posts]
     profiles = load_profiles(profiles_dir)
     weather = _read_json(data_dir / "weather.json")

@@ -75,6 +75,23 @@ class Draft:
     warnings: list[str]
 
 
+@dataclass
+class Publication:
+    event_id: str
+    outlet: Literal["mash", "life", "super"]
+    published_at: datetime  # model time of the editor's "publish"
+
+
+@dataclass
+class Alert:
+    event_id: str
+    outlet: str
+    kind: Literal["denial", "update"]
+    post_id: str  # the official post that triggered the alert
+    ts: datetime
+    summary: str  # one sentence for the editor, in Russian
+
+
 def to_dict(obj: Any) -> Any:
     """Model (or list/dict of models) -> JSON-ready value. datetime becomes ISO 8601."""
     if dataclasses.is_dataclass(obj) and not isinstance(obj, type):
