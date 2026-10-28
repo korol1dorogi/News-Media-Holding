@@ -11,28 +11,35 @@
   «перенесено → ID», «отменено: причина».
 - «Готово» — только по смерженному PR.
 - Ветка = ID задачи. Тесты — `tests/test_{id}_*.py`, id в нижнем регистре.
-- Сразу, без ожидания других, можно брать: S1, C1, V1, V2, V3, AI1, UX1 (работают от контракта).
+- Сразу, без ожидания других, можно брать: AI1, UX1, S2, L4 (лид), S3 (генератор, без отчёта).
 
 ## Кодовые задачи
 
 | ID | Файлы задачи (писать можно только сюда + tests/test_{id}_*.py) | Зависит | Готово, когда | Статус |
 |---|---|---|---|---|
-| L1 | каркас | — | make check зелёный | готово (PR этот) |
+| L1 | каркас | — | make check зелёный | готово (#11) |
 | L2 | radar/core/*, radar/api/*, frontend/src/types.ts, frontend/src/api.ts, frontend/src/mock/* | L1 | API отдаёт ту же форму, что mock-JSON | готово (в L1) |
 | L3 | radar/pipeline.py, radar/storage.py | все Must-модули | make run поднимает всё, /api/replay/reset пересобирает базу | почти готово: pipeline и API работают на синтетике |
 | S1 | scripts/gen_synthetic.py, data/synthetic/* | контракт | генератор детерминирован, все события демо-сценария в truth.yaml | готово (#6) |
-| S2 | scripts/eval.py, reports/* | S1, L3 | make eval пишет reports/metrics.json и metrics.md | не начато |
+| S2 | scripts/eval.py, reports/* (кроме reports/hard/ и reports/redteam.md) | S1, L3 | make eval пишет reports/metrics.json и metrics.md; максимум — в карточке | не начато |
+| S3 | scripts/gen_synthetic_hard.py, data/synthetic_hard/*, reports/hard/* | S1, S2 | хитрые фейки во втором городе, свой truth.yaml, отчёт S2 по ним в reports/hard/ | не начато |
 | C1 | radar/normalize/* | контракт | geo и topic совпадают с ожиданием на 20 постах | готово (#7) |
 | C2 | radar/cluster/* | C1 | каждое событие truth.yaml собрано в один кластер | готово (#8) |
 | C3 | radar/score/*, data/profiles/* | C2 | шум ниже событий, порядок для mash и life различается | готово (#9) |
-| AI1 | radar/draft/generate.py, radar/llm/* (кроме `__init__.py`) | контракт | разные черновики для mash и life без сети и ключа | не начато |
-| AI2 | radar/draft/claims.py | AI1 | на событии с inject_error ровно одно supported=false, на остальных ноль | не начато |
+| C4 | radar/score/learn.py, data/labels/* | C3, S2 | логрегрессия на метках «опубликовано / нет» обучается детерминированно, S2 сравнивает её с ручными весами | не начато |
+| AI1 | radar/draft/generate.py, radar/llm/* (кроме `__init__.py`) | контракт | разные черновики для mash и life без сети и ключа; максимум — в карточке | не начато |
+| AI2 | radar/draft/claims.py | AI1 | на событии с inject_error ровно одно supported=false, на остальных ноль; максимум — в карточке | не начато |
+| AI3 | tests/redteam/*.yaml, reports/redteam.md | AI2 | 20+ сценариев red team зелёные в make check, сводка в reports/redteam.md | не начато |
 | V1 | radar/verify/provenance.py | контракт | independent и first_source совпадают с truth.yaml | готово (#1) |
 | V2 | radar/verify/media.py | контракт | «наводнение» fail, пережатая и обрезанная копия находится | готово (#4) |
 | V3 | radar/verify/weather.py | контракт | «снегопад» fail с понятным summary | готово (#5) |
 | V4 | radar/verify/official.py, radar/verify/dossier.py | V1 | уровни досье совпадают с truth.yaml | готово (#2) |
-| UX1 | frontend/src/App.tsx, frontend/src/components/*, frontend/src/pages/* | mock-JSON | демо-сценарий проходится кликами | не начато |
+| V5 | radar/verify/watchdog.py | V4, L4 | событие, опровергнутое после публикации, видно в /api/alerts (реэкспорт в `verify/__init__.py` добавит лид) | не начато |
+| L4 | radar/api/*, radar/core/*, frontend/src/types.ts, frontend/src/api.ts, frontend/src/mock/* | L3 | /api/events/{id}/publish, /api/alerts, /api/replay/stream отдают фикстуры, тест на форму | не начато |
+| UX1 | frontend/src/App.tsx, frontend/src/components/*, frontend/src/pages/* (кроме Live.tsx и Quality.tsx) | mock-JSON | демо-сценарий проходится кликами; максимум — в карточке | не начато |
 | UX2 | frontend/src/components/RepostGraph.tsx | UX1, V1 | у «слуха» видно один первоисточник | не начато |
+| UX3 | frontend/src/pages/Live.tsx | UX1, L4 | на видео видно, через сколько минут ДТП поднялось в ленте и как «наводнение» краснеет | не начато |
+| UX4 | frontend/src/pages/Quality.tsx | UX1, S2 | страница показывает метрики из /api/metrics после make eval | не начато |
 
 UX1 не трогает `frontend/src/components/RepostGraph.tsx` — это файл UX2.
 
@@ -40,12 +47,19 @@ UX1 не трогает `frontend/src/components/RepostGraph.tsx` — это ф�
 
 | ID | Задача | Зависит |
 |---|---|---|
-| REL1 | Деплой на VPS за Caddy, сброс демо | L3 |
-| P1 | Видео на 2 минуты по демо-сценарию | L3, UX1 |
-| P2 | Слайды (около 10) со скриншотами | UX1 |
-| DOC1 | Текст заявки, README | S2 |
+| REL1 | Деплой на VPS за Caddy, сброс демо, /api/ready | L3 |
+| REL2 | Релизные проверки: make check, make eval, чистый клон, протокол, тег на проверенном коммите | всё в main |
+| P1 | Видео на 2–3 минуты по демо-сценарию | UX1, AI2 |
+| P2 | Слайды (около 12) со скриншотами и замерами | UX1, S2 |
+| P3 | Внешняя проверка: человек, не писавший код, поднимает проект по README | DOC2 |
+| DOC1 | Текст заявки по 5 пунктам задания | S2 |
+| DOC2 | README для жюри и docs/assumptions.md | UX1, S2 |
 
-Что режем, если не успеваем (по порядку): V3, UX2, REL1, профиль Super.
+Подробные карточки и «максимум» каждой задачи — в Google Doc, раздел «Расширения задач».
+Порядок: сначала база всех Must (AI1, AI2, UX1, S2, DOC1, DOC2, P1, P2, REL2), потом расширения.
+
+Что режем, если не успеваем (по порядку): C4, UX4, S3, AI3, связка L4 + V5 + UX3,
+«максимум» в AI1, AI2, UX1, S2, P3, UX2, REL1.
 
 ## Контракт
 
