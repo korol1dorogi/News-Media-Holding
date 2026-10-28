@@ -21,7 +21,8 @@ from radar import verify
 from radar.core.models import Dossier, Event, Post
 from radar.draft import check_claims, generate
 from radar.llm import MockProvider
-from radar.pipeline import OUTLETS, Result, process
+from radar.pipeline import OUTLETS, PROFILES_DIR, Result, load_profiles, process
+from radar.score.learn import LABELS_DIR, compare
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DATA = ROOT / "data" / "synthetic"
@@ -213,7 +214,14 @@ def _share(values) -> float | None:
     return round(sum(values) / len(values), 3) if values else None
 
 
-def render_md(data_dir: str, summary: dict, rows: list[dict], claims: dict, abl: list) -> str:
+def render_md(
+    data_dir: str,
+    summary: dict,
+    rows: list[dict],
+    claims: dict,
+    abl: list,
+    scoring: list[dict],
+) -> str:
     yes = {True: "да", False: "НЕТ"}
     lines = [
         "# Замеры «Сигнала»",
@@ -284,7 +292,29 @@ def render_md(data_dir: str, summary: dict, rows: list[dict], claims: dict, abl:
         title = CHECK_TITLES[r["without"]]
         changed = ", ".join(r["changed"]) or "—"
         lines.append(f"| {title} | {r['level_accuracy']} | {missed} | {changed} |")
+    if scoring:
+        lines += [
+            "",
+            "## Скоринг: ручные веса и обученная модель (C4)",
+            "",
+            "ROC AUC на отложенных 30% синтетических меток «опубликовано / нет» "
+            "(`data/labels`). Ручные веса остаются по умолчанию.",
+            "",
+            "| Издание | Ручные веса | Логистическая регрессия | Выученные веса |",
+            "|---|---|---|---|",
+        ]
+        for r in scoring:
+            weights = ", ".join(f"{k} {v}" for k, v in r["learned_weights"].items())
+            lines.append(f"| {r['outlet']} | {r['manual_auc']} | {r['learned_auc']} | {weights} |")
     return "\n".join(lines) + "\n"
+
+
+def scoring_eval() -> list[dict]:
+    """C4: manual profile weights vs logistic regression on published / not labels."""
+    if not LABELS_DIR.is_dir():
+        return []
+    profiles = load_profiles(PROFILES_DIR)
+    return [compare(outlet, profiles[outlet]) for outlet in OUTLETS]
 
 
 def evaluate(data_dir: Path) -> tuple[dict, str]:
@@ -299,6 +329,7 @@ def evaluate(data_dir: Path) -> tuple[dict, str]:
     )
     abl = ablations(truth, result, matched)
     summary = summarize(result.posts, result, rows, claims)
+    scoring = scoring_eval()
     try:
         shown = data_dir.resolve().relative_to(ROOT).as_posix()
     except ValueError:
@@ -309,8 +340,9 @@ def evaluate(data_dir: Path) -> tuple[dict, str]:
         "events": rows,
         "claims": claims,
         "ablations": abl,
+        "scoring": scoring,
     }
-    return metrics, render_md(shown, summary, rows, claims, abl)
+    return metrics, render_md(shown, summary, rows, claims, abl, scoring)
 
 
 def main() -> None:

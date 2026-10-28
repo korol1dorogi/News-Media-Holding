@@ -84,3 +84,13 @@
 | фото по архиву (V2) | 0.5 | snowfall, hard_copy_numbers, hard_official_other_event | flood_old_photo: red → yellow, snowfall: red → green, hard_copy_numbers: yellow → green, hard_mirrored_photo: red → yellow, hard_official_other_event: yellow → green |
 | погода на фото (V3) | 0.7 | snowfall, hard_copy_numbers, hard_official_other_event | snowfall: red → green, hard_copy_numbers: yellow → green, hard_official_other_event: yellow → green |
 | официальные каналы (V4) | 0.5 | mall_fire, snowfall, hard_copy_numbers, hard_late_denial, hard_official_other_event | mall_fire: red → green, snowfall: red → green, hard_copy_numbers: yellow → green, hard_late_denial: red → green, hard_official_other_event: yellow → green |
+
+## Скоринг: ручные веса и обученная модель (C4)
+
+ROC AUC на отложенных 30% синтетических меток «опубликовано / нет» (`data/labels`). Ручные веса остаются по умолчанию.
+
+| Издание | Ручные веса | Логистическая регрессия | Выученные веса |
+|---|---|---|---|
+| mash | 0.914 | 0.922 | topic 2.75, geo 0.4, reach 0.51, speed 3.2, media 3.28 |
+| life | 0.917 | 0.907 | topic 3.13, geo 2.23, reach 3.84, speed 0.96, media 0.23 |
+| super | 0.876 | 0.901 | topic 4.01, geo 2.23, reach 1.01, speed 0.34, media 1.86 |

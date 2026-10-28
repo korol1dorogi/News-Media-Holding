@@ -26,7 +26,7 @@
 | C1 | radar/normalize/* | контракт | geo и topic совпадают с ожиданием на 20 постах | готово (#7) |
 | C2 | radar/cluster/* | C1 | каждое событие truth.yaml собрано в один кластер | готово (#8) |
 | C3 | radar/score/*, data/profiles/* | C2 | шум ниже событий, порядок для mash и life различается | готово (#9) |
-| C4 | radar/score/learn.py, data/labels/* | C3, S2 | логрегрессия на метках «опубликовано / нет» обучается детерминированно, S2 сравнивает её с ручными весами | не начато |
+| C4 | radar/score/learn.py, data/labels/* | C3, S2 | логрегрессия на метках «опубликовано / нет» обучается детерминированно, S2 сравнивает её с ручными весами | готово (в main) |
 | AI1 | radar/draft/generate.py, radar/llm/* (кроме `__init__.py`) | контракт | разные черновики для mash и life без сети и ключа; максимум — в карточке | готово (в main) |
 | AI2 | radar/draft/claims.py | AI1 | на событии с inject_error ровно одно supported=false, на остальных ноль; максимум — в карточке | готово (в main) |
 | AI3 | tests/redteam/*.yaml, reports/redteam.md | AI2 | 20+ сценариев red team зелёные в make check, сводка в reports/redteam.md | готово (в main) |

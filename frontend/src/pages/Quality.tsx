@@ -44,6 +44,13 @@ interface Ablation {
   changed?: string[];
 }
 
+interface Scoring {
+  outlet: string;
+  manual_auc: number;
+  learned_auc: number;
+  learned_weights: Record<string, number>;
+}
+
 const CHECK_TITLES: Record<string, string> = {
   provenance: "Первоисточник и независимые источники",
   media_archive: "Фото по архиву",
@@ -90,6 +97,7 @@ export default function Quality() {
   }
   const events = (metrics.events ?? []) as EventRow[];
   const ablations = (metrics.ablations ?? []) as Ablation[];
+  const scoring = (metrics.scoring ?? []) as Scoring[];
   const dataDir = typeof metrics.data_dir === "string" ? metrics.data_dir : "";
 
   return (
@@ -192,6 +200,43 @@ export default function Quality() {
           </table>
         </div>
       </section>
+
+      {scoring.length > 0 && (
+        <section className="space-y-2">
+          <h3 className="font-medium">Скоринг: ручные веса и обученная модель</h3>
+          <p className="text-sm text-slate-600">
+            ROC AUC на отложенных синтетических метках «опубликовано / нет». В продакшене метки
+            даёт архив издания и кнопка «Опубликовать».
+          </p>
+          <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-slate-50 text-slate-600">
+                <tr>
+                  <th className="p-2">Издание</th>
+                  <th className="p-2">Ручные веса</th>
+                  <th className="p-2">Обученная модель</th>
+                  <th className="p-2">Что модель считает важным</th>
+                </tr>
+              </thead>
+              <tbody>
+                {scoring.map((row) => (
+                  <tr key={row.outlet} className="border-t border-slate-100">
+                    <td className="p-2">{row.outlet}</td>
+                    <td className="p-2">{row.manual_auc}</td>
+                    <td className="p-2">{row.learned_auc}</td>
+                    <td className="p-2 text-xs">
+                      {Object.entries(row.learned_weights)
+                        .sort((a, b) => b[1] - a[1])
+                        .map(([name, value]) => `${name} ${value}`)
+                        .join(", ")}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
