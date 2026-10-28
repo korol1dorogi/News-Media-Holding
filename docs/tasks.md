@@ -29,7 +29,7 @@
 | C4 | radar/score/learn.py, data/labels/* | C3, S2 | логрегрессия на метках «опубликовано / нет» обучается детерминированно, S2 сравнивает её с ручными весами | не начато |
 | AI1 | radar/draft/generate.py, radar/llm/* (кроме `__init__.py`) | контракт | разные черновики для mash и life без сети и ключа; максимум — в карточке | готово (в main) |
 | AI2 | radar/draft/claims.py | AI1 | на событии с inject_error ровно одно supported=false, на остальных ноль; максимум — в карточке | готово (в main) |
-| AI3 | tests/redteam/*.yaml, reports/redteam.md | AI2 | 20+ сценариев red team зелёные в make check, сводка в reports/redteam.md | не начато |
+| AI3 | tests/redteam/*.yaml, reports/redteam.md | AI2 | 20+ сценариев red team зелёные в make check, сводка в reports/redteam.md | готово (в main) |
 | V1 | radar/verify/provenance.py | контракт | independent и first_source совпадают с truth.yaml | готово (#1) |
 | V2 | radar/verify/media.py | контракт | «наводнение» fail, пережатая и обрезанная копия находится | готово (#4) |
 | V3 | radar/verify/weather.py | контракт | «снегопад» fail с понятным summary | готово (#5) |
