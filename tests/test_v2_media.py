@@ -9,6 +9,7 @@ from pathlib import Path
 
 import imagehash
 import pytest
+import yaml
 from PIL import Image, ImageDraw
 
 from radar.core.models import Event, Post
@@ -19,6 +20,7 @@ from radar.verify.media import _ARCHIVE_CACHE, HASH_SIZE, MAX_DISTANCE, _crop_ha
 
 TS = datetime.fromisoformat("2026-10-27T10:00:00+03:00")
 SYNTHETIC = ROOT / "data" / "synthetic"
+MINI = ROOT / "tests" / "fixtures" / "mini"
 
 
 def archive_frame() -> Image.Image:
@@ -134,10 +136,9 @@ def ids(check, key: str) -> list[str]:
     return [item[key] for item in check.evidence if key in item]
 
 
-@pytest.mark.parametrize("data_dir", [ROOT / "tests" / "fixtures" / "mini", SYNTHETIC])
-def test_flood_is_old_photo(data_dir: Path):
-    _, posts = load_replay(data_dir)
-    check = media_archive(make_event(["m_004", "m_005", "m_006"]), posts, data_dir / "archive")
+def test_flood_is_old_photo():
+    _, posts = load_replay(MINI)
+    check = media_archive(make_event(["m_004", "m_005", "m_006"]), posts, MINI / "archive")
     assert check.name == "media_archive"
     assert check.status == "fail"
     assert ids(check, "archive_id") == ["arc_flood_2024"]
@@ -145,12 +146,25 @@ def test_flood_is_old_photo(data_dir: Path):
     assert "20.10.2024" in check.summary
 
 
-@pytest.mark.parametrize("data_dir", [ROOT / "tests" / "fixtures" / "mini", SYNTHETIC])
-def test_event_without_photos_is_na(data_dir: Path):
-    _, posts = load_replay(data_dir)
-    check = media_archive(make_event(["m_001", "m_002", "m_003"]), posts, data_dir / "archive")
+def test_event_without_photos_is_na():
+    _, posts = load_replay(MINI)
+    check = media_archive(make_event(["m_001", "m_002", "m_003"]), posts, MINI / "archive")
     assert check.status == "n/a"
     assert check.summary == "В событии нет фото, сверять нечего."
+
+
+def test_synthetic_truth():
+    _, posts = load_replay(SYNTHETIC)
+    truth = yaml.safe_load((SYNTHETIC / "truth.yaml").read_text(encoding="utf-8"))
+    by_id = {post.id: post for post in posts}
+    for item in truth["events"]:
+        check = media_archive(make_event(item["post_ids"]), posts, SYNTHETIC / "archive")
+        if not any(by_id[pid].media for pid in item["post_ids"]):
+            assert check.status == "n/a", item["key"]
+        elif item.get("expected_fail") == "media_archive":
+            assert check.status == "fail", item["key"]
+        else:
+            assert check.status != "fail", item["key"]
 
 
 @pytest.mark.parametrize("name", sorted(COPIES))
@@ -174,7 +188,7 @@ def test_unrelated_photo_is_ok(tmp_path: Path, name: str):
 def test_unrelated_photo_keeps_margin(name: str):
     # The best crop of the archive frame must stay well away from the threshold.
     photo_hash = imagehash.phash(OTHERS[name](), hash_size=HASH_SIZE)
-    flood = Image.open(SYNTHETIC / "archive" / "flood_2024.png").convert("RGB")
+    flood = Image.open(MINI / "archive" / "flood_2024.png").convert("RGB")
     for archive in (archive_frame(), flood):
         distance = min(int(photo_hash - h) for h in _crop_hashes(archive))
         assert distance >= MAX_DISTANCE + 4
@@ -182,7 +196,7 @@ def test_unrelated_photo_keeps_margin(name: str):
 
 def test_similar_layout_is_not_old_photo(tmp_path: Path):
     # Regression: at 64 bits this frame (sky, houses, dark band, moon) matched flood_2024.
-    shutil.copytree(SYNTHETIC / "archive", tmp_path / "archive")
+    shutil.copytree(MINI / "archive", tmp_path / "archive")
     (tmp_path / "media").mkdir()
     archive_frame().save(tmp_path / "media" / "street.jpg", "JPEG", quality=90)
     post = make_post("p_1", 0, ["street.jpg"])
@@ -263,18 +277,15 @@ def test_every_match_goes_to_evidence(tmp_path: Path):
 
 
 def test_order_of_posts_does_not_matter():
-    _, posts = load_replay(SYNTHETIC)
+    _, posts = load_replay(MINI)
     post_ids = ["m_004", "m_005", "m_006"]
-    expected = media_archive(make_event(post_ids), posts, SYNTHETIC / "archive")
+    expected = media_archive(make_event(post_ids), posts, MINI / "archive")
     rng = random.Random(42)
     for _ in range(5):
         shuffled_posts, shuffled_ids = posts[:], post_ids[:]
         rng.shuffle(shuffled_posts)
         rng.shuffle(shuffled_ids)
-        assert (
-            media_archive(make_event(shuffled_ids), shuffled_posts, SYNTHETIC / "archive")
-            == expected
-        )
+        assert media_archive(make_event(shuffled_ids), shuffled_posts, MINI / "archive") == expected
 
 
 def test_cached_archive_gives_same_check(tmp_path: Path):
