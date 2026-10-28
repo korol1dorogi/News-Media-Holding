@@ -1,0 +1,346 @@
+{
+  "data_dir": "data/synthetic",
+  "summary": {
+    "posts": 531,
+    "events_in_feed": 7,
+    "truth_events": 6,
+    "truth_events_found": 6,
+    "posts_per_event": 6.57,
+    "posts_left_as_noise": 485,
+    "cluster_recall_mean": 1.0,
+    "cluster_purity_mean": 1.0,
+    "minutes_to_signal_median": 10.0,
+    "minutes_to_signal_max": 17.0,
+    "dossier_level_accuracy": 1.0,
+    "expected_fail_accuracy": 1.0,
+    "first_source_accuracy": 1.0,
+    "independent_sources_accuracy": 1.0,
+    "llm_calls_feed_per_100_posts": 0.0,
+    "llm_calls_per_draft": 1.0,
+    "claim_check_injected_caught": "3/3",
+    "claim_check_false_alarms": 0
+  },
+  "events": [
+    {
+      "key": "dtp_entry",
+      "found": true,
+      "event_id": "ev_p_0075",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 3.0,
+      "level": "green",
+      "expected_level": "green",
+      "level_ok": true,
+      "expected_fail": null,
+      "fail_ok": true,
+      "first_source": "p_0075",
+      "first_source_ok": true,
+      "independent": 6,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "ok",
+        "weather": "ok",
+        "official": "ok"
+      }
+    },
+    {
+      "key": "flood_old_photo",
+      "found": true,
+      "event_id": "ev_p_0115",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 4.0,
+      "level": "red",
+      "expected_level": "red",
+      "level_ok": true,
+      "expected_fail": "media_archive",
+      "fail_ok": true,
+      "first_source": "p_0115",
+      "first_source_ok": true,
+      "independent": 1,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "warn",
+        "media_archive": "fail",
+        "weather": "ok",
+        "official": "n/a"
+      }
+    },
+    {
+      "key": "plant_rumor",
+      "found": true,
+      "event_id": "ev_p_0142",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 17.0,
+      "level": "yellow",
+      "expected_level": "yellow",
+      "level_ok": true,
+      "expected_fail": null,
+      "fail_ok": true,
+      "first_source": "p_0142",
+      "first_source_ok": true,
+      "independent": 1,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "warn",
+        "media_archive": "n/a",
+        "weather": "n/a",
+        "official": "n/a"
+      }
+    },
+    {
+      "key": "mall_fire",
+      "found": true,
+      "event_id": "ev_p_0427",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 8.0,
+      "level": "red",
+      "expected_level": "red",
+      "level_ok": true,
+      "expected_fail": "official",
+      "fail_ok": true,
+      "first_source": "p_0427",
+      "first_source_ok": true,
+      "independent": 4,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "n/a",
+        "weather": "n/a",
+        "official": "fail"
+      }
+    },
+    {
+      "key": "snowfall",
+      "found": true,
+      "event_id": "ev_p_0395",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 12.0,
+      "level": "red",
+      "expected_level": "red",
+      "level_ok": true,
+      "expected_fail": "weather",
+      "fail_ok": true,
+      "first_source": "p_0395",
+      "first_source_ok": true,
+      "independent": 2,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "ok",
+        "weather": "fail",
+        "official": "n/a"
+      }
+    },
+    {
+      "key": "water_outage",
+      "found": true,
+      "event_id": "ev_p_0045",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 12.0,
+      "level": "green",
+      "expected_level": "green",
+      "level_ok": true,
+      "expected_fail": null,
+      "fail_ok": true,
+      "first_source": "p_0045",
+      "first_source_ok": true,
+      "independent": 3,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "n/a",
+        "weather": "n/a",
+        "official": "ok"
+      }
+    }
+  ],
+  "claims": {
+    "drafts": 18,
+    "claims": 70,
+    "injected_drafts": 3,
+    "injected_caught": 3,
+    "clean_drafts": 15,
+    "false_alarms": 0,
+    "rows": [
+      {
+        "key": "dtp_entry",
+        "outlet": "mash",
+        "claims": 4,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "dtp_entry",
+        "outlet": "life",
+        "claims": 5,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "dtp_entry",
+        "outlet": "super",
+        "claims": 4,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "flood_old_photo",
+        "outlet": "mash",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "flood_old_photo",
+        "outlet": "life",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "flood_old_photo",
+        "outlet": "super",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "plant_rumor",
+        "outlet": "mash",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "plant_rumor",
+        "outlet": "life",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "plant_rumor",
+        "outlet": "super",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "mall_fire",
+        "outlet": "mash",
+        "claims": 3,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "mall_fire",
+        "outlet": "life",
+        "claims": 5,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "mall_fire",
+        "outlet": "super",
+        "claims": 3,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "snowfall",
+        "outlet": "mash",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "snowfall",
+        "outlet": "life",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "snowfall",
+        "outlet": "super",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "water_outage",
+        "outlet": "mash",
+        "claims": 10,
+        "unsupported": [
+          "15 домах"
+        ],
+        "injected": true
+      },
+      {
+        "key": "water_outage",
+        "outlet": "life",
+        "claims": 11,
+        "unsupported": [
+          "15 домах"
+        ],
+        "injected": true
+      },
+      {
+        "key": "water_outage",
+        "outlet": "super",
+        "claims": 10,
+        "unsupported": [
+          "15 домах"
+        ],
+        "injected": true
+      }
+    ],
+    "llm_calls_per_draft": 1.0
+  },
+  "ablations": [
+    {
+      "without": "provenance",
+      "level_accuracy": 0.833,
+      "missed_fakes": [
+        "plant_rumor"
+      ],
+      "changed": [
+        "plant_rumor: yellow → green"
+      ]
+    },
+    {
+      "without": "media_archive",
+      "level_accuracy": 0.833,
+      "missed_fakes": [],
+      "changed": [
+        "flood_old_photo: red → yellow"
+      ]
+    },
+    {
+      "without": "weather",
+      "level_accuracy": 0.833,
+      "missed_fakes": [
+        "snowfall"
+      ],
+      "changed": [
+        "snowfall: red → green"
+      ]
+    },
+    {
+      "without": "official",
+      "level_accuracy": 0.833,
+      "missed_fakes": [
+        "mall_fire"
+      ],
+      "changed": [
+        "mall_fire: red → green"
+      ]
+    }
+  ]
+}
