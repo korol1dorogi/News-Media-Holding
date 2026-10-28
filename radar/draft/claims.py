@@ -54,6 +54,8 @@ DIGITS_RE = re.compile(r"(?<!\d)\d+(?:[.,]\d+)?(?!\d)")
 WORD_RE = re.compile(r"[а-яё]+", re.IGNORECASE)
 QUOTED_RE = re.compile(r"«([^»]{2,60})»")
 ACRONYM_RE = re.compile(r"(?<![А-ЯЁA-Z])[А-ЯЁ]{3,}(?![А-ЯЁA-Z])")
+# Common nouns, not names: «ДТП» in a draft is supported by «авария» in a post.
+GENERIC_ACRONYMS = {"ДТП", "ЖКХ", "ЧП", "ТЦ", "ТРЦ", "СМИ", "ЛЭП", "ПДД", "ЖК", "ТЭЦ"}
 OFFICIAL_CLAIM_RE = re.compile(r"официально\s+подтвер|официальн\w*\s+подтвержд", re.IGNORECASE)
 OFFICIAL_SOURCE_RE = re.compile(r"подтвержд|подтверди|сообщил[аи]?\s+в\s|пресс-служб")
 GEO_REGEXES = tuple(
@@ -64,6 +66,26 @@ UNIT_RE = re.compile(r"\s*([а-яё]+)", re.IGNORECASE)
 OFFICIAL_WARNING = (
     "В черновике сказано, что событие официально подтверждено, но в источниках нет "
     "официального подтверждения."
+)
+
+# Output guardrails: (pattern, warning). A stem counts only if no source post has it too.
+ACCUSATION_RE = re.compile(
+    r"винов|арестова|задержан|обвиня|преступ|убийц|убил|мошенни|\bвор(?:ом|а|ы|ов)?\b"
+    r"|пьян|под\s+кайф|наркотик|взятк|коррупц"
+)
+INSULT_RE = re.compile(r"идиот|дебил|кретин|урод|твар|мразь|быдл|придурк|дура[кч]")
+INJECTION_RE = re.compile(
+    r"игнорир\w*\s+(?:все\s+|предыдущ\w*\s+)?инструкц|забудь\w*\s+(?:все\s+)?(?:правила|инструкц)"
+    r"|ignore\s+(?:all\s+|previous\s+)?instructions|system\s+prompt|системн\w*\s+промт"
+)
+ACCUSATION_WARNING = (
+    "В черновике есть обвинение или криминальная деталь, которой нет в источниках: «{}». "
+    "Без источника не публиковать."
+)
+INSULT_WARNING = "В черновике есть оскорбление: «{}». Уберите его."
+INJECTION_WARNING = (
+    "В черновик попал текст, похожий на инструкцию для модели из поста: «{}». "
+    "Это данные, а не указание — уберите его."
 )
 
 
@@ -103,7 +125,26 @@ def check_claims(draft: Draft, posts: list[Post]) -> Draft:
         OFFICIAL_SOURCE_RE.search(text) for _, text, _ in sources
     ):
         warnings.append(OFFICIAL_WARNING)
+    warnings += guardrail_warnings(draft.text, [text for _, text, _ in sources])
     return dataclasses.replace(draft, claims=claims, warnings=list(dict.fromkeys(warnings)))
+
+
+def guardrail_warnings(text: str, sources: list[str]) -> list[str]:
+    """Accusations without a source, insults and prompt-injection text that leaked in."""
+    lowered = _prepare(text)
+    warnings = []
+    for match in ACCUSATION_RE.finditer(lowered):
+        if not any(match.group(0) in source for source in sources):
+            warnings.append(ACCUSATION_WARNING.format(_word_at(text, match.start())))
+    for match in INSULT_RE.finditer(lowered):
+        warnings.append(INSULT_WARNING.format(_word_at(text, match.start())))
+    for match in INJECTION_RE.finditer(lowered):
+        warnings.append(INJECTION_WARNING.format(text[match.start() : match.end()]))
+    return warnings
+
+
+def _word_at(text: str, start: int) -> str:
+    return text[start : _word_end(_prepare(text), start)]
 
 
 def extract(text: str) -> list[_Found]:
@@ -141,7 +182,8 @@ def extract(text: str) -> list[_Found]:
                 start, end = m.start(), _word_end(lowered, m.end())
                 add(start, end, "place", (geo,))
     for m in ACRONYM_RE.finditer(text):
-        add(m.start(), m.end(), "acronym", (m.group(0),))
+        if m.group(0) not in GENERIC_ACRONYMS:
+            add(m.start(), m.end(), "acronym", (m.group(0),))
     return sorted(found, key=lambda f: f.start)
 
 
