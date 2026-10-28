@@ -1,8 +1,9 @@
 """Confirmation or denial by an official channel (task V4).
 
 Candidates are official posts inside the event or within a time window around event.first_ts.
-An outside post belongs to the event if geo and topic match (when both sides have them) or,
-as a fallback, if its char TF-IDF cosine to some event post reaches LINK_THRESHOLD (D-03).
+An outside post about another geo never belongs to the event. Otherwise it belongs if geo and
+topic match (when both sides have them) or, as a fallback, if its char TF-IDF cosine to some
+event post reaches LINK_THRESHOLD (D-03).
 A denial among linked posts beats any confirmation.
 """
 
@@ -63,6 +64,8 @@ def _linked(event: Event, event_posts: list[Post], candidates: list[Post]) -> li
     for post in candidates:
         if post.id in in_event:
             linked[post.id] = True
+        elif event.geo and post.geo and event.geo != post.geo:
+            linked[post.id] = False  # an official post about another place never confirms
         elif event.geo and event.topic and post.geo and post.topic:
             linked[post.id] = (event.geo, event.topic) == (post.geo, post.topic)
         else:
@@ -110,7 +113,8 @@ def official(event: Event, posts: list[Post], channels: list[Channel]) -> Check:
         }
         for p in linked
     ]
-    key = denials[0] if denials else linked[0]
+    own = [p for p in linked if p.id in set(event.post_ids)]
+    key = denials[0] if denials else (own or linked)[0]
     verb = "опроверг" if denials else "подтвердил"
     summary = f"Официальный канал «{titles[key.channel_id]}» {verb} событие в {key.ts:%H:%M}."
     return Check(

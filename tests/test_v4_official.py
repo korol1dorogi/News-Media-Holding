@@ -198,3 +198,37 @@ def test_deterministic_on_shuffled_input() -> None:
         rng.shuffle(shuffled_posts)
         rng.shuffle(shuffled_channels)
         assert official(fire_event(), shuffled_posts, shuffled_channels) == expected
+
+
+def test_official_post_about_another_place_does_not_confirm() -> None:
+    """Regression: a road-works notice with similar wording confirmed the crash on another geo."""
+    crash = [
+        make_post(
+            "d_1",
+            PUBLIC,
+            0,
+            "ДТП на северном въезде: автобус и грузовик, просим водителей объезжать.",
+        ),
+        make_post("d_2", READER, 5, "Авария на северном въезде, пробка, водители стоят."),
+    ]
+    for p in crash:
+        p.geo, p.topic = "северный въезд", "ДТП"
+    works = make_post(
+        "w_1",
+        GIBDD,
+        -30,
+        "В Сосновом ремонт дорожного покрытия, просим водителей заранее объезжать.",
+    )
+    works.geo = "микрорайон Сосновый"
+    event = Event(
+        id="ev_d",
+        post_ids=["d_1", "d_2"],
+        first_ts=crash[0].ts,
+        title="ДТП",
+        geo="северный въезд",
+        topic="ДТП",
+        scores={},
+    )
+    check = official(event, [works, *crash], CHANNELS)
+    assert check.status == "n/a"
+    assert check.evidence == []
