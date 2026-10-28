@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 import pytest
+import yaml
 
 from radar.core.models import Event, Post
 from radar.core.settings import ROOT
@@ -57,9 +58,8 @@ def replay(data_dir: Path) -> tuple[list[Post], dict, dict]:
     return posts, weather_data, meta
 
 
-@pytest.mark.parametrize("data_dir", [MINI, SYNTHETIC], ids=["mini", "synthetic"])
-def test_flood_matches_weather(data_dir: Path) -> None:
-    posts, weather_data, meta = replay(data_dir)
+def test_flood_matches_weather() -> None:
+    posts, weather_data, meta = replay(MINI)
     check = weather(event(["m_004", "m_005", "m_006"]), posts, weather_data, meta)
     assert check.name == "weather"
     assert check.status == "ok"
@@ -68,13 +68,23 @@ def test_flood_matches_weather(data_dir: Path) -> None:
     assert all("flood.jpg" in e["note"] for e in check.evidence)
 
 
-@pytest.mark.parametrize("data_dir", [MINI, SYNTHETIC], ids=["mini", "synthetic"])
-def test_accident_without_photos_is_na(data_dir: Path) -> None:
-    posts, weather_data, meta = replay(data_dir)
+def test_accident_without_photos_is_na() -> None:
+    posts, weather_data, meta = replay(MINI)
     check = weather(event(["m_001", "m_002", "m_003"]), posts, weather_data, meta)
     assert check.status == "n/a"
     assert "нет фото" in check.summary
     assert check.evidence == []
+
+
+def test_synthetic_truth() -> None:
+    posts, weather_data, meta = replay(SYNTHETIC)
+    truth = yaml.safe_load((SYNTHETIC / "truth.yaml").read_text(encoding="utf-8"))
+    for item in truth["events"]:
+        check = weather(event(item["post_ids"]), posts, weather_data, meta)
+        if item.get("expected_fail") == "weather":
+            assert check.status == "fail", item["key"]
+        else:
+            assert check.status != "fail", item["key"]
 
 
 def test_snowfall_fails_with_clear_summary() -> None:
