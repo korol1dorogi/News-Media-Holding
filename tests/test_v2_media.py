@@ -198,6 +198,27 @@ def test_archive_record_after_post_is_not_fail(tmp_path: Path):
     assert check.status == "ok"
 
 
+@pytest.mark.parametrize(
+    ("published_at", "status"), [("2024-10-20T09:00:00", "fail"), ("2026-10-27T10:30:00", "ok")]
+)
+def test_archive_date_without_timezone(tmp_path: Path, published_at: str, status: str):
+    archive = make_data(tmp_path, jpeg(archive_frame(), 30), published_at=published_at)
+    check = media_archive(make_event(["p_1"]), [make_post("p_1", 0, ["photo.jpg"])], archive)
+    assert check.status == status
+
+
+@pytest.mark.parametrize(
+    ("published_at", "status"),
+    [("2026-10-27T09:30:00+03:00", "fail"), ("2026-10-27T10:30:00+03:00", "ok")],
+)
+def test_post_date_without_timezone(tmp_path: Path, published_at: str, status: str):
+    archive = make_data(tmp_path, jpeg(archive_frame(), 30), published_at=published_at)
+    post = make_post("p_1", 0, ["photo.jpg"])
+    post.ts = post.ts.replace(tzinfo=None)
+    check = media_archive(make_event(["p_1"]), [post], archive)
+    assert check.status == status
+
+
 def test_missing_archive_is_na(tmp_path: Path):
     (tmp_path / "media").mkdir()
     archive_frame().save(tmp_path / "media" / "photo.jpg")

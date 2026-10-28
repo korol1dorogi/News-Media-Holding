@@ -59,7 +59,7 @@ def media_archive(event: Event, posts: list[Post], archive_dir: Path) -> Check:
         if photo_hash is None:
             continue
         checked.append(file)
-        earlier = [r for r in records if r.published_at < first_post[file].ts]
+        earlier = [r for r in records if _before(r.published_at, first_post[file].ts)]
         found = _nearest(photo_hash, earlier)
         if found is not None and found[1] <= MAX_DISTANCE:
             matches.append((file, *found))
@@ -87,6 +87,15 @@ def media_archive(event: Event, posts: list[Post], archive_dir: Path) -> Check:
         "Фото не найдено в архиве, похоже на новое.",
         [{"post_id": first_with_photo.id, "note": f"{len(checked)} фото проверено"}],
     )
+
+
+def _before(a: datetime, b: datetime) -> bool:
+    # Naive and aware datetimes can't be compared; take the naive one in the other's zone.
+    if a.tzinfo is None and b.tzinfo is not None:
+        a = a.replace(tzinfo=b.tzinfo)
+    elif b.tzinfo is None and a.tzinfo is not None:
+        b = b.replace(tzinfo=a.tzinfo)
+    return a < b
 
 
 def _check(status: str, summary: str, evidence: list[dict]) -> Check:
