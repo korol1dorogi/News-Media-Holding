@@ -60,8 +60,9 @@ def weather(event: Event, posts: list[Post], weather: dict, media_meta: dict) ->
         return _na(NO_WEATHER.format(dates=", ".join(_fmt_date(d) for d in dates)))
 
     worst = max(SEVERITY[f[1]] for f in findings)
-    reported = [f for f in findings if SEVERITY[f[1]] == worst]
-    status, summary = reported[0][1], reported[0][2]
+    status, summary = next(f[1:3] for f in findings if SEVERITY[f[1]] == worst)
+    # every contradiction is evidence; ok findings only when there are none
+    reported = [f for f in findings if (f[1] == "ok") == (status == "ok")]
     if skipped:
         summary += f" Проверено {checked} из {len(items)} фото."
 
