@@ -8,12 +8,13 @@ from datetime import datetime
 from pathlib import Path
 
 import imagehash
-from PIL import Image
+from PIL import Image, ImageOps
 
 from radar.core.models import Check, Event, Post
 
 # Archive frames are hashed over a grid of crops: a cropped and resized copy is close
-# to one of them even when the whole-frame hashes differ a lot.
+# to one of them even when the whole-frame hashes differ a lot. The mirrored frame is hashed
+# too: flipping an old photo is a common way to fool a plain pHash (found in S3).
 CROP_SCALES = (0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0)
 CROP_OFFSETS = (0.0, 0.25, 0.5, 0.75, 1.0)
 # 144-bit pHash: at 64 bits a real copy scores 6 and an unrelated frame 10, no threshold fits.
@@ -147,8 +148,11 @@ def _crop_boxes(width: int, height: int) -> list[tuple[int, int, int, int]]:
 
 
 def _crop_hashes(image: Image.Image) -> tuple[imagehash.ImageHash, ...]:
+    boxes = _crop_boxes(*image.size)
     return tuple(
-        imagehash.phash(image.crop(box), hash_size=HASH_SIZE) for box in _crop_boxes(*image.size)
+        imagehash.phash(frame.crop(box), hash_size=HASH_SIZE)
+        for frame in (image, ImageOps.mirror(image))
+        for box in boxes
     )
 
 
