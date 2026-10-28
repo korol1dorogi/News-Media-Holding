@@ -17,20 +17,20 @@
 
 | ID | Файлы задачи (писать можно только сюда + tests/test_{id}_*.py) | Зависит | Готово, когда | Статус |
 |---|---|---|---|---|
-| L1 | каркас | — | make check зелёный | на ревью |
-| L2 | radar/core/*, radar/api/*, frontend/src/types.ts, frontend/src/api.ts, frontend/src/mock/* | L1 | API отдаёт ту же форму, что mock-JSON | не начато |
-| L3 | radar/pipeline.py, radar/storage.py | все Must-модули | make run поднимает всё, /api/replay/reset пересобирает базу | не начато |
-| S1 | scripts/gen_synthetic.py, data/synthetic/* | контракт | генератор детерминирован, все события демо-сценария в truth.yaml | не начато |
+| L1 | каркас | — | make check зелёный | готово (PR этот) |
+| L2 | radar/core/*, radar/api/*, frontend/src/types.ts, frontend/src/api.ts, frontend/src/mock/* | L1 | API отдаёт ту же форму, что mock-JSON | готово (в L1) |
+| L3 | radar/pipeline.py, radar/storage.py | все Must-модули | make run поднимает всё, /api/replay/reset пересобирает базу | почти готово: pipeline и API работают на синтетике |
+| S1 | scripts/gen_synthetic.py, data/synthetic/* | контракт | генератор детерминирован, все события демо-сценария в truth.yaml | готово (#6) |
 | S2 | scripts/eval.py, reports/* | S1, L3 | make eval пишет reports/metrics.json и metrics.md | не начато |
-| C1 | radar/normalize/* | контракт | geo и topic совпадают с ожиданием на 20 постах | не начато |
-| C2 | radar/cluster/* | C1 | каждое событие truth.yaml собрано в один кластер | не начато |
-| C3 | radar/score/*, data/profiles/* | C2 | шум ниже событий, порядок для mash и life различается | не начато |
+| C1 | radar/normalize/* | контракт | geo и topic совпадают с ожиданием на 20 постах | готово (#7) |
+| C2 | radar/cluster/* | C1 | каждое событие truth.yaml собрано в один кластер | готово (#8) |
+| C3 | radar/score/*, data/profiles/* | C2 | шум ниже событий, порядок для mash и life различается | готово (#9) |
 | AI1 | radar/draft/generate.py, radar/llm/* (кроме `__init__.py`) | контракт | разные черновики для mash и life без сети и ключа | не начато |
 | AI2 | radar/draft/claims.py | AI1 | на событии с inject_error ровно одно supported=false, на остальных ноль | не начато |
-| V1 | radar/verify/provenance.py | контракт | independent и first_source совпадают с truth.yaml | не начато |
-| V2 | radar/verify/media.py | контракт | «наводнение» fail, пережатая и обрезанная копия находится | не начато |
-| V3 | radar/verify/weather.py | контракт | «снегопад» fail с понятным summary | не начато |
-| V4 | radar/verify/official.py, radar/verify/dossier.py | V1 | уровни досье совпадают с truth.yaml | не начато |
+| V1 | radar/verify/provenance.py | контракт | independent и first_source совпадают с truth.yaml | готово (#1) |
+| V2 | radar/verify/media.py | контракт | «наводнение» fail, пережатая и обрезанная копия находится | готово (#4) |
+| V3 | radar/verify/weather.py | контракт | «снегопад» fail с понятным summary | готово (#5) |
+| V4 | radar/verify/official.py, radar/verify/dossier.py | V1 | уровни досье совпадают с truth.yaml | готово (#2) |
 | UX1 | frontend/src/App.tsx, frontend/src/components/*, frontend/src/pages/* | mock-JSON | демо-сценарий проходится кликами | не начато |
 | UX2 | frontend/src/components/RepostGraph.tsx | UX1, V1 | у «слуха» видно один первоисточник | не начато |
 
