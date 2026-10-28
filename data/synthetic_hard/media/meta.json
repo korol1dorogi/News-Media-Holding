@@ -1,0 +1,18 @@
+{
+  "dtp.jpg": {
+    "scene": "rain",
+    "daylight": true
+  },
+  "flood.jpg": {
+    "scene": "rain",
+    "daylight": true
+  },
+  "snow.jpg": {
+    "scene": "snow",
+    "daylight": true
+  },
+  "zarechye.jpg": {
+    "scene": "rain",
+    "daylight": true
+  }
+}
