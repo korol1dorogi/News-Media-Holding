@@ -1,0 +1,56 @@
+# Ожидаемые исходы для усложнённой синтетики (S3). Город, места и каналы вымышлены.
+# Файл генерирует scripts/gen_synthetic_hard.py, руками не править.
+# Базовые демо-события те же, что в data/synthetic; hard_* — хитрые фейки.
+events:
+- key: dtp_entry
+  post_ids: [p_0158, p_0161, p_0169, p_0174, p_0175, p_0180, p_0182, p_0183, p_0188, p_0197]
+  first_source: p_0158
+  independent_sources: 6
+  expected_level: green
+- key: flood_old_photo
+  post_ids: [p_0253, p_0254, p_0265, p_0280, p_0293, p_0308]
+  first_source: p_0253
+  independent_sources: 1
+  expected_level: red
+  expected_fail: media_archive
+- key: plant_rumor
+  post_ids: [p_0307, p_0316, p_0325, p_0335, p_0343, p_0355, p_0368, p_0379, p_0399, p_0430, p_0460, p_0494, p_0530, p_0562, p_0596]
+  first_source: p_0307
+  independent_sources: 1
+  expected_level: yellow
+- key: mall_fire
+  post_ids: [p_1141, p_1145, p_1150, p_1159, p_1183]
+  first_source: p_1141
+  independent_sources: 4
+  expected_level: red
+  expected_fail: official
+- key: snowfall
+  post_ids: [p_1052, p_1059, p_1067]
+  first_source: p_1052
+  independent_sources: 2
+  expected_level: red
+  expected_fail: weather
+- key: water_outage
+  post_ids: [p_0098, p_0107, p_0118, p_0134]
+  first_source: p_0098
+  independent_sources: 3
+  expected_level: green
+  inject_error: true
+- key: hard_copy_numbers
+  post_ids: [p_1063, p_1065, p_1077]
+  first_source: p_1063
+  independent_sources: 1
+  expected_level: yellow
+- key: hard_mirrored_photo
+  post_ids: [p_0390, p_0393, p_0410]
+  expected_level: red
+  expected_fail: media_archive
+- key: hard_late_denial
+  post_ids: [p_0358, p_0367, p_0569]
+  expected_level: red
+  expected_fail: official
+- key: hard_official_other_event
+  post_ids: [p_0903, p_0906, p_0907]
+  first_source: p_0903
+  independent_sources: 1
+  expected_level: yellow

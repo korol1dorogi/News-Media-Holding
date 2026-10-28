@@ -1,0 +1,552 @@
+{
+  "data_dir": "data/synthetic_hard",
+  "summary": {
+    "posts": 1522,
+    "events_in_feed": 27,
+    "truth_events": 10,
+    "truth_events_found": 10,
+    "posts_per_event": 4.15,
+    "posts_left_as_noise": 1410,
+    "cluster_recall_mean": 0.933,
+    "cluster_purity_mean": 0.95,
+    "minutes_to_signal_median": 7.0,
+    "minutes_to_signal_max": 17.0,
+    "dossier_level_accuracy": 0.6,
+    "expected_fail_accuracy": 0.6,
+    "first_source_accuracy": 0.9,
+    "independent_sources_accuracy": 0.8,
+    "llm_calls_feed_per_100_posts": 0.0,
+    "llm_calls_per_draft": 1.0,
+    "claim_check_injected_caught": "3/3",
+    "claim_check_false_alarms": 0
+  },
+  "events": [
+    {
+      "key": "dtp_entry",
+      "found": true,
+      "event_id": "ev_p_0158",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 3.0,
+      "level": "green",
+      "expected_level": "green",
+      "level_ok": true,
+      "expected_fail": null,
+      "fail_ok": true,
+      "first_source": "p_0158",
+      "first_source_ok": true,
+      "independent": 6,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "ok",
+        "weather": "n/a",
+        "official": "ok"
+      }
+    },
+    {
+      "key": "flood_old_photo",
+      "found": true,
+      "event_id": "ev_p_0253",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 4.0,
+      "level": "red",
+      "expected_level": "red",
+      "level_ok": true,
+      "expected_fail": "media_archive",
+      "fail_ok": true,
+      "first_source": "p_0253",
+      "first_source_ok": true,
+      "independent": 1,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "warn",
+        "media_archive": "fail",
+        "weather": "n/a",
+        "official": "n/a"
+      }
+    },
+    {
+      "key": "plant_rumor",
+      "found": true,
+      "event_id": "ev_p_0307",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 17.0,
+      "level": "yellow",
+      "expected_level": "yellow",
+      "level_ok": true,
+      "expected_fail": null,
+      "fail_ok": true,
+      "first_source": "p_0307",
+      "first_source_ok": true,
+      "independent": 1,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "warn",
+        "media_archive": "n/a",
+        "weather": "n/a",
+        "official": "n/a"
+      }
+    },
+    {
+      "key": "mall_fire",
+      "found": true,
+      "event_id": "ev_p_1141",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 8.0,
+      "level": "red",
+      "expected_level": "red",
+      "level_ok": true,
+      "expected_fail": "official",
+      "fail_ok": true,
+      "first_source": "p_1141",
+      "first_source_ok": true,
+      "independent": 4,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "n/a",
+        "weather": "n/a",
+        "official": "fail"
+      }
+    },
+    {
+      "key": "snowfall",
+      "found": true,
+      "event_id": "ev_p_1052",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 12.0,
+      "level": "green",
+      "expected_level": "red",
+      "level_ok": false,
+      "expected_fail": "weather",
+      "fail_ok": false,
+      "first_source": "p_1052",
+      "first_source_ok": true,
+      "independent": 2,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "ok",
+        "weather": "n/a",
+        "official": "n/a"
+      }
+    },
+    {
+      "key": "water_outage",
+      "found": true,
+      "event_id": "ev_p_0098",
+      "recall": 1.0,
+      "purity": 1.0,
+      "minutes_to_signal": 12.0,
+      "level": "green",
+      "expected_level": "green",
+      "level_ok": true,
+      "expected_fail": null,
+      "fail_ok": true,
+      "first_source": "p_0098",
+      "first_source_ok": true,
+      "independent": 3,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "n/a",
+        "weather": "n/a",
+        "official": "ok"
+      }
+    },
+    {
+      "key": "hard_copy_numbers",
+      "found": true,
+      "event_id": "ev_p_1063",
+      "recall": 1.0,
+      "purity": 0.75,
+      "minutes_to_signal": 6.0,
+      "level": "green",
+      "expected_level": "yellow",
+      "level_ok": false,
+      "expected_fail": null,
+      "fail_ok": true,
+      "first_source": "p_1063",
+      "first_source_ok": true,
+      "independent": 3,
+      "independent_ok": false,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "n/a",
+        "weather": "n/a",
+        "official": "n/a"
+      }
+    },
+    {
+      "key": "hard_mirrored_photo",
+      "found": true,
+      "event_id": "ev_p_0390",
+      "recall": 0.667,
+      "purity": 1.0,
+      "minutes_to_signal": 5.0,
+      "level": "yellow",
+      "expected_level": "red",
+      "level_ok": false,
+      "expected_fail": "media_archive",
+      "fail_ok": false,
+      "first_source": "p_0390",
+      "first_source_ok": true,
+      "independent": 1,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "warn",
+        "media_archive": "ok",
+        "weather": "n/a",
+        "official": "n/a"
+      }
+    },
+    {
+      "key": "hard_late_denial",
+      "found": true,
+      "event_id": "ev_p_0358",
+      "recall": 0.667,
+      "purity": 1.0,
+      "minutes_to_signal": 12.0,
+      "level": "red",
+      "expected_level": "red",
+      "level_ok": true,
+      "expected_fail": "official",
+      "fail_ok": true,
+      "first_source": "p_0358",
+      "first_source_ok": true,
+      "independent": 2,
+      "independent_ok": true,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "n/a",
+        "weather": "n/a",
+        "official": "fail"
+      }
+    },
+    {
+      "key": "hard_official_other_event",
+      "found": true,
+      "event_id": "ev_p_0872",
+      "recall": 1.0,
+      "purity": 0.75,
+      "minutes_to_signal": 0.0,
+      "level": "green",
+      "expected_level": "yellow",
+      "level_ok": false,
+      "expected_fail": null,
+      "fail_ok": true,
+      "first_source": "p_0872",
+      "first_source_ok": false,
+      "independent": 2,
+      "independent_ok": false,
+      "checks": {
+        "provenance": "ok",
+        "media_archive": "n/a",
+        "weather": "n/a",
+        "official": "ok"
+      }
+    }
+  ],
+  "claims": {
+    "drafts": 30,
+    "claims": 88,
+    "injected_drafts": 3,
+    "injected_caught": 3,
+    "clean_drafts": 27,
+    "false_alarms": 0,
+    "rows": [
+      {
+        "key": "dtp_entry",
+        "outlet": "mash",
+        "claims": 3,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "dtp_entry",
+        "outlet": "life",
+        "claims": 4,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "dtp_entry",
+        "outlet": "super",
+        "claims": 3,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "flood_old_photo",
+        "outlet": "mash",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "flood_old_photo",
+        "outlet": "life",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "flood_old_photo",
+        "outlet": "super",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "plant_rumor",
+        "outlet": "mash",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "plant_rumor",
+        "outlet": "life",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "plant_rumor",
+        "outlet": "super",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "mall_fire",
+        "outlet": "mash",
+        "claims": 3,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "mall_fire",
+        "outlet": "life",
+        "claims": 5,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "mall_fire",
+        "outlet": "super",
+        "claims": 3,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "snowfall",
+        "outlet": "mash",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "snowfall",
+        "outlet": "life",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "snowfall",
+        "outlet": "super",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "water_outage",
+        "outlet": "mash",
+        "claims": 10,
+        "unsupported": [
+          "15 домах"
+        ],
+        "injected": true
+      },
+      {
+        "key": "water_outage",
+        "outlet": "life",
+        "claims": 11,
+        "unsupported": [
+          "15 домах"
+        ],
+        "injected": true
+      },
+      {
+        "key": "water_outage",
+        "outlet": "super",
+        "claims": 10,
+        "unsupported": [
+          "15 домах"
+        ],
+        "injected": true
+      },
+      {
+        "key": "hard_copy_numbers",
+        "outlet": "mash",
+        "claims": 3,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_copy_numbers",
+        "outlet": "life",
+        "claims": 3,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_copy_numbers",
+        "outlet": "super",
+        "claims": 3,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_mirrored_photo",
+        "outlet": "mash",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_mirrored_photo",
+        "outlet": "life",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_mirrored_photo",
+        "outlet": "super",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_late_denial",
+        "outlet": "mash",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_late_denial",
+        "outlet": "life",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_late_denial",
+        "outlet": "super",
+        "claims": 1,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_official_other_event",
+        "outlet": "mash",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_official_other_event",
+        "outlet": "life",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      },
+      {
+        "key": "hard_official_other_event",
+        "outlet": "super",
+        "claims": 2,
+        "unsupported": [],
+        "injected": false
+      }
+    ],
+    "llm_calls_per_draft": 1.0
+  },
+  "ablations": [
+    {
+      "without": "provenance",
+      "level_accuracy": 0.5,
+      "missed_fakes": [
+        "plant_rumor",
+        "snowfall",
+        "hard_copy_numbers",
+        "hard_mirrored_photo",
+        "hard_official_other_event"
+      ],
+      "changed": [
+        "plant_rumor: yellow → green",
+        "snowfall: red → green",
+        "hard_copy_numbers: yellow → green",
+        "hard_mirrored_photo: red → green",
+        "hard_official_other_event: yellow → green"
+      ]
+    },
+    {
+      "without": "media_archive",
+      "level_accuracy": 0.5,
+      "missed_fakes": [
+        "snowfall",
+        "hard_copy_numbers",
+        "hard_official_other_event"
+      ],
+      "changed": [
+        "flood_old_photo: red → yellow",
+        "snowfall: red → green",
+        "hard_copy_numbers: yellow → green",
+        "hard_mirrored_photo: red → yellow",
+        "hard_official_other_event: yellow → green"
+      ]
+    },
+    {
+      "without": "weather",
+      "level_accuracy": 0.6,
+      "missed_fakes": [
+        "snowfall",
+        "hard_copy_numbers",
+        "hard_official_other_event"
+      ],
+      "changed": [
+        "snowfall: red → green",
+        "hard_copy_numbers: yellow → green",
+        "hard_mirrored_photo: red → yellow",
+        "hard_official_other_event: yellow → green"
+      ]
+    },
+    {
+      "without": "official",
+      "level_accuracy": 0.4,
+      "missed_fakes": [
+        "mall_fire",
+        "snowfall",
+        "hard_copy_numbers",
+        "hard_late_denial",
+        "hard_official_other_event"
+      ],
+      "changed": [
+        "mall_fire: red → green",
+        "snowfall: red → green",
+        "hard_copy_numbers: yellow → green",
+        "hard_mirrored_photo: red → yellow",
+        "hard_late_denial: red → green",
+        "hard_official_other_event: yellow → green"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,254 @@
+[
+  {
+    "id": "ch_admin",
+    "title": "Администрация города (синтетика)",
+    "kind": "official",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_center",
+    "title": "Центр: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_embankment",
+    "title": "Набережная: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_north",
+    "title": "Северная сторона: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_park",
+    "title": "Парковый: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_river",
+    "title": "Приречье: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_sadovy",
+    "title": "Садовый: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_school",
+    "title": "Школьный квартал: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_sosnovy",
+    "title": "Сосновый: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_south",
+    "title": "Южный район: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_vokzal",
+    "title": "Привокзальный: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_district_zarechye",
+    "title": "Заречье: новости (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_gibdd",
+    "title": "ГИБДД города (синтетика)",
+    "kind": "official",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_mchs",
+    "title": "МЧС города (синтетика)",
+    "kind": "official",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_outlet_echo",
+    "title": "Радио «Эхо города» (синтетика)",
+    "kind": "outlet",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_outlet_vestnik",
+    "title": "Газета «Городской вестник» (синтетика)",
+    "kind": "outlet",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_01",
+    "title": "Городской паблик (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_02",
+    "title": "Город онлайн (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_03",
+    "title": "Новости города 24 (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_04",
+    "title": "Подслушано в городе (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_05",
+    "title": "Что случилось в городе (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_06",
+    "title": "Город сейчас (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_07",
+    "title": "Срочно. Город (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_08",
+    "title": "Наш город (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_09",
+    "title": "Инцидент. Город (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_10",
+    "title": "Городская афиша (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_11",
+    "title": "Типичный горожанин (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_12",
+    "title": "Город на связи (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_13",
+    "title": "Горожане пишут (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_14",
+    "title": "Новости без фильтров (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_15",
+    "title": "Городской вестник онлайн (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_16",
+    "title": "Город и люди (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_17",
+    "title": "Пульс города (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_18",
+    "title": "Городской дозор (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_19",
+    "title": "Город за минуту (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_20",
+    "title": "Объявления города (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_21",
+    "title": "Городские истории (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_public_22",
+    "title": "Город. Главное (синтетика)",
+    "kind": "public",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_reader_bot",
+    "title": "Бот читателей (синтетика)",
+    "kind": "reader_bot",
+    "region": "demo-city"
+  },
+  {
+    "id": "ch_second_public_01",
+    "title": "Соседний город онлайн (синтетика)",
+    "kind": "public",
+    "region": "second-city"
+  },
+  {
+    "id": "ch_second_public_02",
+    "title": "Новости соседнего города (синтетика)",
+    "kind": "public",
+    "region": "second-city"
+  },
+  {
+    "id": "ch_vodokanal",
+    "title": "Водоканал города (синтетика)",
+    "kind": "official",
+    "region": "demo-city"
+  }
+]
