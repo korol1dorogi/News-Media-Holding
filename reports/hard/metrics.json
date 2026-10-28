@@ -544,5 +544,49 @@
         "hard_official_other_event: yellow → green"
       ]
     }
+  ],
+  "scoring": [
+    {
+      "outlet": "mash",
+      "train": 280,
+      "test": 120,
+      "manual_auc": 0.914,
+      "learned_auc": 0.922,
+      "learned_weights": {
+        "topic": 2.75,
+        "geo": 0.4,
+        "reach": 0.51,
+        "speed": 3.2,
+        "media": 3.28
+      }
+    },
+    {
+      "outlet": "life",
+      "train": 280,
+      "test": 120,
+      "manual_auc": 0.917,
+      "learned_auc": 0.907,
+      "learned_weights": {
+        "topic": 3.13,
+        "geo": 2.23,
+        "reach": 3.84,
+        "speed": 0.96,
+        "media": 0.23
+      }
+    },
+    {
+      "outlet": "super",
+      "train": 280,
+      "test": 120,
+      "manual_auc": 0.876,
+      "learned_auc": 0.901,
+      "learned_weights": {
+        "topic": 4.01,
+        "geo": 2.23,
+        "reach": 1.01,
+        "speed": 0.34,
+        "media": 1.86
+      }
+    }
   ]
 }
