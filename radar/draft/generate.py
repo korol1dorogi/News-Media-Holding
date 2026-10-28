@@ -16,6 +16,7 @@ from radar.llm import Provider
 DATA_OPEN = "<data>"
 DATA_CLOSE = "</data>"
 MAX_POSTS = 20
+MAX_POST_CHARS = 2000  # a very long post must not crowd out the others
 
 STYLE = {
     "mash": (
@@ -87,7 +88,7 @@ def build_user(event: Event, posts: list[Post], outlet: str) -> str:
                 "channel_id": post.channel_id,
                 "ts": post.ts.isoformat(),
                 "forward_from": post.forward_from,
-                "text": post.text,
+                "text": post.text[:MAX_POST_CHARS],
             }
             for post in ordered
         ],
