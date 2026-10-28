@@ -15,8 +15,8 @@
 | Чистота кластеров, среднее | 0.95 |
 | Минут до сигнала, медиана | 7.0 |
 | Минут до сигнала, максимум | 17.0 |
-| Точность уровня досье | 0.6 |
-| Нужная проверка дала fail | 0.6 |
+| Точность уровня досье | 0.7 |
+| Нужная проверка дала fail | 0.8 |
 | Первоисточник найден верно | 0.9 |
 | Число независимых источников верно | 0.8 |
 | Вызовов LLM на 100 постов ленты | 0.0 |
@@ -35,7 +35,7 @@
 | snowfall | green | red | НЕТ | 12.0 | 1.0 | 1.0 | да | 2 (да) |
 | water_outage | green | green | да | 12.0 | 1.0 | 1.0 | да | 3 (да) |
 | hard_copy_numbers | green | yellow | НЕТ | 6.0 | 1.0 | 0.75 | да | 3 (НЕТ) |
-| hard_mirrored_photo | yellow | red | НЕТ | 5.0 | 0.667 | 1.0 | да | 1 (да) |
+| hard_mirrored_photo | red | red | да | 5.0 | 0.667 | 1.0 | да | 1 (да) |
 | hard_late_denial | red | red | да | 12.0 | 0.667 | 1.0 | да | 2 (да) |
 | hard_official_other_event | green | yellow | НЕТ | 0.0 | 1.0 | 0.75 | НЕТ | 2 (НЕТ) |
 
@@ -80,7 +80,7 @@
 
 | Без проверки | Точность уровня | Фейки, ставшие зелёными | Изменился уровень |
 |---|---|---|---|
-| первоисточник и независимые источники (V1) | 0.5 | plant_rumor, snowfall, hard_copy_numbers, hard_mirrored_photo, hard_official_other_event | plant_rumor: yellow → green, snowfall: red → green, hard_copy_numbers: yellow → green, hard_mirrored_photo: red → green, hard_official_other_event: yellow → green |
+| первоисточник и независимые источники (V1) | 0.6 | plant_rumor, snowfall, hard_copy_numbers, hard_official_other_event | plant_rumor: yellow → green, snowfall: red → green, hard_copy_numbers: yellow → green, hard_official_other_event: yellow → green |
 | фото по архиву (V2) | 0.5 | snowfall, hard_copy_numbers, hard_official_other_event | flood_old_photo: red → yellow, snowfall: red → green, hard_copy_numbers: yellow → green, hard_mirrored_photo: red → yellow, hard_official_other_event: yellow → green |
-| погода на фото (V3) | 0.6 | snowfall, hard_copy_numbers, hard_official_other_event | snowfall: red → green, hard_copy_numbers: yellow → green, hard_mirrored_photo: red → yellow, hard_official_other_event: yellow → green |
-| официальные каналы (V4) | 0.4 | mall_fire, snowfall, hard_copy_numbers, hard_late_denial, hard_official_other_event | mall_fire: red → green, snowfall: red → green, hard_copy_numbers: yellow → green, hard_mirrored_photo: red → yellow, hard_late_denial: red → green, hard_official_other_event: yellow → green |
+| погода на фото (V3) | 0.7 | snowfall, hard_copy_numbers, hard_official_other_event | snowfall: red → green, hard_copy_numbers: yellow → green, hard_official_other_event: yellow → green |
+| официальные каналы (V4) | 0.5 | mall_fire, snowfall, hard_copy_numbers, hard_late_denial, hard_official_other_event | mall_fire: red → green, snowfall: red → green, hard_copy_numbers: yellow → green, hard_late_denial: red → green, hard_official_other_event: yellow → green |
