@@ -162,7 +162,7 @@
   ],
   "claims": {
     "drafts": 18,
-    "claims": 70,
+    "claims": 67,
     "injected_drafts": 3,
     "injected_caught": 3,
     "clean_drafts": 15,
@@ -171,21 +171,21 @@
       {
         "key": "dtp_entry",
         "outlet": "mash",
-        "claims": 4,
+        "claims": 3,
         "unsupported": [],
         "injected": false
       },
       {
         "key": "dtp_entry",
         "outlet": "life",
-        "claims": 5,
+        "claims": 4,
         "unsupported": [],
         "injected": false
       },
       {
         "key": "dtp_entry",
         "outlet": "super",
-        "claims": 4,
+        "claims": 3,
         "unsupported": [],
         "injected": false
       },
