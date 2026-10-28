@@ -17,7 +17,7 @@ def get_provider(settings: Settings | None = None) -> Provider:
     """Pick the provider by LLM_PROVIDER: mock (default) or openai."""
     settings = settings or load_settings()
     if settings.llm_provider == "mock":
-        return MockProvider()
+        return MockProvider(truth_path=settings.data_dir / "truth.yaml")
     if settings.llm_provider == "openai":
         return OpenAICompatProvider(
             base_url=settings.llm_base_url,
