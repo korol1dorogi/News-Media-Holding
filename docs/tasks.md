@@ -39,7 +39,7 @@
 | UX1 | frontend/src/App.tsx, frontend/src/components/*, frontend/src/pages/* (кроме Live.tsx и Quality.tsx) | mock-JSON | демо-сценарий проходится кликами; максимум — в карточке | готово (в main) |
 | UX2 | frontend/src/components/RepostGraph.tsx | UX1, V1 | у «слуха» видно один первоисточник | готово (в main) |
 | UX3 | frontend/src/pages/Live.tsx | UX1, L4 | на видео видно, через сколько минут ДТП поднялось в ленте и как «наводнение» краснеет | не начато |
-| UX4 | frontend/src/pages/Quality.tsx | UX1, S2 | страница показывает метрики из /api/metrics после make eval | не начато |
+| UX4 | frontend/src/pages/Quality.tsx | UX1, S2 | страница показывает метрики из /api/metrics после make eval | готово (в main) |
 
 UX1 не трогает `frontend/src/components/RepostGraph.tsx` — это файл UX2.
 
@@ -53,7 +53,7 @@ UX1 не трогает `frontend/src/components/RepostGraph.tsx` — это ф�
 | P2 | Слайды (около 12) со скриншотами и замерами | UX1, S2 |
 | P3 | Внешняя проверка: человек, не писавший код, поднимает проект по README | DOC2 |
 | DOC1 | Текст заявки по 5 пунктам задания | S2 |
-| DOC2 | README для жюри и docs/assumptions.md | UX1, S2 |
+| DOC2 | README для жюри и docs/assumptions.md — готово (в main), ждёт P3 и скриншотов | UX1, S2 |
 
 Подробные карточки и «максимум» каждой задачи — в Google Doc, раздел «Расширения задач».
 Порядок: сначала база всех Must (AI1, AI2, UX1, S2, DOC1, DOC2, P1, P2, REL2), потом расширения.
