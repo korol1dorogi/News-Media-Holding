@@ -1,14 +1,38 @@
-# Мини-набор для тестов каркаса. Город и каналы вымышленные, данные синтетические.
-# m_005 — пересылка m_004, m_006 — копия m_004 без пересылки (тот же источник).
-# m_007, m_008 — шум.
+# Ожидаемые исходы демо-событий. Данные синтетические: город, места и каналы вымышлены.
+# Файл генерирует scripts/gen_synthetic.py, руками не править.
+# post_ids — все посты события, включая пересылки и копии.
 events:
-  - key: dtp_entry
-    post_ids: [m_001, m_002, m_003]
-    first_source: m_001
-    expected_level: green
-  - key: flood_old_photo
-    post_ids: [m_004, m_005, m_006]
-    first_source: m_004
-    independent_sources: 1
-    expected_level: red
-    expected_fail: media_archive
+- key: dtp_entry
+  post_ids: [p_0075, p_0078, p_0080, p_0081, p_0085, p_0091, p_0094, p_0095, p_0096, p_0097]
+  first_source: p_0075
+  independent_sources: 6
+  expected_level: green
+- key: flood_old_photo
+  post_ids: [p_0115, p_0118, p_0121, p_0129, p_0136, p_0143]
+  first_source: p_0115
+  independent_sources: 1
+  expected_level: red
+  expected_fail: media_archive
+- key: plant_rumor
+  post_ids: [p_0142, p_0145, p_0149, p_0152, p_0156, p_0162, p_0166, p_0169, p_0177, p_0186, p_0195, p_0206, p_0229, p_0241, p_0251]
+  first_source: p_0142
+  independent_sources: 1
+  expected_level: yellow
+- key: mall_fire
+  post_ids: [p_0427, p_0430, p_0431, p_0433, p_0446]
+  first_source: p_0427
+  independent_sources: 4
+  expected_level: red
+  expected_fail: official
+- key: snowfall
+  post_ids: [p_0395, p_0398, p_0403]
+  first_source: p_0395
+  independent_sources: 2
+  expected_level: red
+  expected_fail: weather
+- key: water_outage
+  post_ids: [p_0045, p_0052, p_0059, p_0067]
+  first_source: p_0045
+  independent_sources: 3
+  expected_level: green
+  inject_error: true

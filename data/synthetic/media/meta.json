@@ -1,3 +1,14 @@
 {
-  "flood.jpg": {"scene": "rain", "daylight": true}
+  "dtp.jpg": {
+    "scene": "rain",
+    "daylight": true
+  },
+  "flood.jpg": {
+    "scene": "rain",
+    "daylight": true
+  },
+  "snow.jpg": {
+    "scene": "snow",
+    "daylight": true
+  }
 }
