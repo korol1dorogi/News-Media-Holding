@@ -11,8 +11,8 @@
     "cluster_purity_mean": 0.95,
     "minutes_to_signal_median": 7.0,
     "minutes_to_signal_max": 17.0,
-    "dossier_level_accuracy": 0.6,
-    "expected_fail_accuracy": 0.6,
+    "dossier_level_accuracy": 0.7,
+    "expected_fail_accuracy": 0.8,
     "first_source_accuracy": 0.9,
     "independent_sources_accuracy": 0.8,
     "llm_calls_feed_per_100_posts": 0.0,
@@ -189,18 +189,18 @@
       "recall": 0.667,
       "purity": 1.0,
       "minutes_to_signal": 5.0,
-      "level": "yellow",
+      "level": "red",
       "expected_level": "red",
-      "level_ok": false,
+      "level_ok": true,
       "expected_fail": "media_archive",
-      "fail_ok": false,
+      "fail_ok": true,
       "first_source": "p_0390",
       "first_source_ok": true,
       "independent": 1,
       "independent_ok": true,
       "checks": {
         "provenance": "warn",
-        "media_archive": "ok",
+        "media_archive": "fail",
         "weather": "n/a",
         "official": "n/a"
       }
@@ -482,19 +482,17 @@
   "ablations": [
     {
       "without": "provenance",
-      "level_accuracy": 0.5,
+      "level_accuracy": 0.6,
       "missed_fakes": [
         "plant_rumor",
         "snowfall",
         "hard_copy_numbers",
-        "hard_mirrored_photo",
         "hard_official_other_event"
       ],
       "changed": [
         "plant_rumor: yellow → green",
         "snowfall: red → green",
         "hard_copy_numbers: yellow → green",
-        "hard_mirrored_photo: red → green",
         "hard_official_other_event: yellow → green"
       ]
     },
@@ -516,7 +514,7 @@
     },
     {
       "without": "weather",
-      "level_accuracy": 0.6,
+      "level_accuracy": 0.7,
       "missed_fakes": [
         "snowfall",
         "hard_copy_numbers",
@@ -525,13 +523,12 @@
       "changed": [
         "snowfall: red → green",
         "hard_copy_numbers: yellow → green",
-        "hard_mirrored_photo: red → yellow",
         "hard_official_other_event: yellow → green"
       ]
     },
     {
       "without": "official",
-      "level_accuracy": 0.4,
+      "level_accuracy": 0.5,
       "missed_fakes": [
         "mall_fire",
         "snowfall",
@@ -543,7 +540,6 @@
         "mall_fire: red → green",
         "snowfall: red → green",
         "hard_copy_numbers: yellow → green",
-        "hard_mirrored_photo: red → yellow",
         "hard_late_denial: red → green",
         "hard_official_other_event: yellow → green"
       ]

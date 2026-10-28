@@ -10,7 +10,7 @@ from pathlib import Path
 import imagehash
 import pytest
 import yaml
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageOps
 
 from radar.core.models import Event, Post
 from radar.core.settings import ROOT
@@ -91,6 +91,8 @@ COPIES = {
     "crop80_shifted": crop80,
     "half_size": half,
     "all_together": lambda img: jpeg(half(crop80(img)), 30),
+    # S3 found that a flipped old photo passed the check.
+    "mirrored_cropped": lambda img: jpeg(ImageOps.mirror(crop80(img)), 50),
 }
 OTHERS = {"circles": other_circles, "stripes": other_stripes, "night": other_noise}
 
