@@ -1,14 +1,20 @@
 // API client. VITE_USE_MOCK=true reads src/mock instead of the server, same shapes.
+import alertsMock from "./mock/alerts.json";
 import draftMock from "./mock/draft.json";
 import eventDetailMock from "./mock/event_detail.json";
 import eventsMock from "./mock/events.json";
 import metricsMock from "./mock/metrics.json";
+import publicationMock from "./mock/publication.json";
+import streamMock from "./mock/stream.json";
 import type {
+  Alert,
   Draft,
   EventDetail,
   EventListItem,
   Metrics,
   Outlet,
+  Publication,
+  ReplayStream,
   ResetResult,
 } from "./types";
 
@@ -88,4 +94,33 @@ export async function ready(): Promise<boolean> {
   if (USE_MOCK) return true;
   const body = await request<{ ok: boolean }>("/api/ready");
   return body.ok;
+}
+
+export async function publishEvent(id: string, outlet: Outlet, at?: string): Promise<Publication> {
+  if (USE_MOCK) {
+    mockDetail(id);
+    const base = clone<Publication>(publicationMock);
+    return { ...base, event_id: id, outlet, published_at: at ?? base.published_at };
+  }
+  return request(`/api/events/${encodeURIComponent(id)}/publish`, {
+    method: "POST",
+    body: JSON.stringify(at ? { outlet, at } : { outlet }),
+  });
+}
+
+export async function getAlerts(): Promise<Alert[]> {
+  if (USE_MOCK) return clone<Alert[]>(alertsMock);
+  return request("/api/alerts");
+}
+
+export async function getStream(outlet: Outlet, until?: string): Promise<ReplayStream> {
+  if (USE_MOCK) {
+    const stream = clone<ReplayStream>(streamMock);
+    const cut = until ?? stream.end;
+    const events = stream.events.filter((item) => item.rose_at <= cut);
+    return { ...stream, until: cut, events };
+  }
+  const query = new URLSearchParams({ outlet });
+  if (until) query.set("until", until);
+  return request(`/api/replay/stream?${query.toString()}`);
 }

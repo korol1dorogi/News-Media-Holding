@@ -8,9 +8,9 @@ from contextlib import closing
 from pathlib import Path
 from typing import Any
 
-from radar.core.models import Channel, Dossier, Event, Post, from_dict, to_dict
+from radar.core.models import Channel, Dossier, Event, Post, Publication, from_dict, to_dict
 
-TABLES = ("channels", "posts", "events", "dossiers")
+TABLES = ("channels", "posts", "events", "dossiers", "publications")
 COLUMNS = "(id TEXT PRIMARY KEY, pos INTEGER NOT NULL, data TEXT NOT NULL)"
 
 
@@ -31,6 +31,7 @@ class Storage:
             "posts": [(p.id, p) for p in posts],
             "events": [(e.id, e) for e in events],
             "dossiers": [(d.event_id, d) for d in dossiers],
+            "publications": [],  # a rebuilt replay starts unpublished
         }
         with closing(self._connect()) as conn, conn:
             for table, items in rows.items():
@@ -42,6 +43,20 @@ class Storage:
                         for pos, (key, obj) in enumerate(items)
                     ],
                 )
+
+    def publish(self, publication: Publication) -> None:
+        """Insert or replace the publication of an event in an outlet."""
+        key = f"{publication.event_id}:{publication.outlet}"
+        data = json.dumps(to_dict(publication), ensure_ascii=False)
+        with closing(self._connect()) as conn, conn:
+            pos = conn.execute("SELECT COUNT(*) FROM publications").fetchone()[0]
+            conn.execute(
+                "INSERT OR REPLACE INTO publications (id, pos, data) VALUES (?, ?, ?)",
+                (key, pos, data),
+            )
+
+    def publications(self) -> list[Publication]:
+        return [from_dict(Publication, row) for row in self._rows("publications")]
 
     def has_events(self) -> bool:
         with closing(self._connect()) as conn:

@@ -34,11 +34,11 @@
 | V2 | radar/verify/media.py | контракт | «наводнение» fail, пережатая и обрезанная копия находится | готово (#4) |
 | V3 | radar/verify/weather.py | контракт | «снегопад» fail с понятным summary | готово (#5) |
 | V4 | radar/verify/official.py, radar/verify/dossier.py | V1 | уровни досье совпадают с truth.yaml | готово (#2) |
-| V5 | radar/verify/watchdog.py | V4, L4 | событие, опровергнутое после публикации, видно в /api/alerts (реэкспорт в `verify/__init__.py` добавит лид) | не начато |
-| L4 | radar/api/*, radar/core/*, frontend/src/types.ts, frontend/src/api.ts, frontend/src/mock/* | L3 | /api/events/{id}/publish, /api/alerts, /api/replay/stream отдают фикстуры, тест на форму | не начато |
+| V5 | radar/verify/watchdog.py | V4, L4 | событие, опровергнутое после публикации, видно в /api/alerts (реэкспорт в `verify/__init__.py` добавит лид) | готово (в main) |
+| L4 | radar/api/*, radar/core/*, frontend/src/types.ts, frontend/src/api.ts, frontend/src/mock/* | L3 | /api/events/{id}/publish, /api/alerts, /api/replay/stream отдают фикстуры, тест на форму | готово (в main) |
 | UX1 | frontend/src/App.tsx, frontend/src/components/*, frontend/src/pages/* (кроме Live.tsx и Quality.tsx) | mock-JSON | демо-сценарий проходится кликами; максимум — в карточке | готово (в main) |
 | UX2 | frontend/src/components/RepostGraph.tsx | UX1, V1 | у «слуха» видно один первоисточник | готово (в main) |
-| UX3 | frontend/src/pages/Live.tsx | UX1, L4 | на видео видно, через сколько минут ДТП поднялось в ленте и как «наводнение» краснеет | не начато |
+| UX3 | frontend/src/pages/Live.tsx | UX1, L4 | на видео видно, через сколько минут ДТП поднялось в ленте и как «наводнение» краснеет | готово (в main) |
 | UX4 | frontend/src/pages/Quality.tsx | UX1, S2 | страница показывает метрики из /api/metrics после make eval | готово (в main) |
 
 UX1 не трогает `frontend/src/components/RepostGraph.tsx` — это файл UX2.
@@ -95,6 +95,9 @@ POST /api/events/{id}/draft    body {"outlet"} -> Draft
 POST /api/replay/reset         -> {"events": n}
 GET  /api/metrics              -> содержимое reports/metrics.json или {}
 GET  /api/ready                -> {"ok": true}
+POST /api/events/{id}/publish  body {"outlet", "at"?} -> Publication            (L4)
+GET  /api/alerts               -> [Alert] сторожа опровержений                  (V5)
+GET  /api/replay/stream?until=ISO&outlet= -> {"start","end","until","events":[{"event","level","score","rose_at","minutes_to_signal"}]}
 ```
 
 Пока в базе нет событий, API отдаёт фикстуры из `frontend/src/mock` с заголовком

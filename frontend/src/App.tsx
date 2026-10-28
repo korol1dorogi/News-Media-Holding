@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { USE_MOCK } from "./api";
 import EditorPage from "./pages/EditorPage";
+import Live from "./pages/Live";
 import Quality from "./pages/Quality";
 
-type Page = "editor" | "quality";
+type Page = "editor" | "live" | "quality";
 
 const PAGES: { id: Page; title: string }[] = [
   { id: "editor", title: "Редактор" },
+  { id: "live", title: "Живой поток" },
   { id: "quality", title: "Качество" },
 ];
 
@@ -42,7 +44,9 @@ export default function App() {
         </div>
       </header>
       <div className="mx-auto max-w-7xl p-4 sm:p-6">
-        {page === "editor" ? <EditorPage /> : <Quality />}
+        {page === "editor" && <EditorPage />}
+        {page === "live" && <Live />}
+        {page === "quality" && <Quality />}
       </div>
     </div>
   );

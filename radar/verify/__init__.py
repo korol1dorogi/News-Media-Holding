@@ -7,6 +7,7 @@ from radar.verify.dossier import build_dossier
 from radar.verify.media import media_archive
 from radar.verify.official import official
 from radar.verify.provenance import provenance, repost_graph
+from radar.verify.watchdog import watchdog
 from radar.verify.weather import weather
 
 __all__ = [
@@ -15,5 +16,6 @@ __all__ = [
     "official",
     "provenance",
     "repost_graph",
+    "watchdog",
     "weather",
 ]

@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { createDraft, getEvent, getEvents, resetReplay } from "../api";
+import { createDraft, getAlerts, getEvent, getEvents, publishEvent, resetReplay } from "../api";
+import AlertList from "../components/AlertList";
 import DossierView from "../components/DossierView";
 import DraftView from "../components/DraftView";
 import EventList from "../components/EventList";
 import PostList from "../components/PostList";
 import RepostGraph from "../components/RepostGraph";
 import { LEVELS, OUTLETS } from "../components/labels";
-import type { Draft, EventDetail, EventListItem, Level, Outlet } from "../types";
+import type { Alert, Draft, EventDetail, EventListItem, Level, Outlet, Publication } from "../types";
 
 type Load<T> = { status: "idle" | "loading" | "error"; data: T | null; error?: string };
 
@@ -23,6 +24,16 @@ export default function EditorPage() {
   const [detail, setDetail] = useState<Load<EventDetail>>({ status: "idle", data: null });
   const [draft, setDraft] = useState<Load<Draft>>({ status: "idle", data: null });
   const [highlightPost, setHighlightPost] = useState<string | null>(null);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [published, setPublished] = useState<Publication | null>(null);
+
+  const loadAlerts = useCallback(() => {
+    getAlerts()
+      .then(setAlerts)
+      .catch(() => setAlerts([]));
+  }, []);
+
+  useEffect(loadAlerts, [loadAlerts]);
 
   const loadFeed = useCallback(() => {
     setFeed((prev) => ({ status: "loading", data: prev.data }));
@@ -35,6 +46,7 @@ export default function EditorPage() {
 
   useEffect(() => {
     setDraft({ status: "idle", data: null });
+    setPublished(null);
     setHighlightPost(null);
     if (!selectedId) return;
     setDetail({ status: "loading", data: null });
@@ -75,11 +87,24 @@ export default function EditorPage() {
       .catch((reason: unknown) => setDraft({ status: "error", data: null, error: message(reason) }));
   }
 
+  function publish() {
+    if (!selectedId) return;
+    publishEvent(selectedId, outlet)
+      .then((data) => {
+        setPublished(data);
+        loadAlerts();
+      })
+      .catch((reason: unknown) => setDraft({ status: "error", data: null, error: message(reason) }));
+  }
+
   function rebuild() {
     setSelectedId(null);
     setDetail({ status: "idle", data: null });
     resetReplay()
-      .then(loadFeed)
+      .then(() => {
+        loadFeed();
+        loadAlerts();
+      })
       .catch((reason: unknown) => setFeed({ status: "error", data: null, error: message(reason) }));
   }
 
@@ -151,6 +176,7 @@ export default function EditorPage() {
       </aside>
 
       <main className="min-w-0 space-y-6">
+        <AlertList alerts={alerts} onOpen={setSelectedId} />
         {!selectedId && (
           <p className="rounded-lg border border-dashed border-slate-300 p-6 text-slate-500">
             Выберите событие в ленте: справа появится досье с проверкой на фейк, посты-источники
@@ -191,6 +217,23 @@ export default function EditorPage() {
                 <p className="text-sm text-red-700">Черновик не получился: {draft.error}</p>
               )}
               {draft.data && <DraftView draft={draft.data} onShowPost={showPost} />}
+              {draft.data && (
+                <div className="flex flex-wrap items-center gap-3 text-sm">
+                  <button
+                    type="button"
+                    onClick={publish}
+                    className="rounded-lg border border-slate-900 px-3 py-1.5 hover:bg-slate-100"
+                  >
+                    Опубликовать в {outletTitle}
+                  </button>
+                  {published && (
+                    <span className="text-slate-600">
+                      Опубликовано (модельное время {new Date(published.published_at).toLocaleString("ru-RU")}).
+                      Сторож следит за официальными каналами.
+                    </span>
+                  )}
+                </div>
+              )}
             </section>
 
             <section className="space-y-2">
