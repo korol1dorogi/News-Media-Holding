@@ -120,6 +120,22 @@ def test_confirmation_with_negated_casualties_is_not_a_denial() -> None:
     assert evidence_ids(check) == ["c_2"]
 
 
+def test_confirmation_with_words_containing_lozhn_is_not_a_denial() -> None:
+    rows = [
+        ("c_1", PUBLIC, 0, "ДТП на северном въезде: автобус столкнулся с грузовиком."),
+        (
+            "c_2",
+            GIBDD,
+            25,
+            "На северном въезде столкнулись автобус и грузовик. Движение затруднено, "
+            "обстановка сложная. У пострадавших осложнений нет.",
+        ),
+    ]
+    check = official(make_event(["c_1"]), make_posts(rows), CHANNELS)
+    assert check.status == "ok"
+    assert evidence_ids(check) == ["c_2"]
+
+
 def test_denial_beats_confirmation() -> None:
     confirm = "В торговом центре на Лесной горит второй этаж, идёт эвакуация."
     rows = [*FIRE, ("f_8", MCHS, 20, confirm), ("f_9", MCHS, 50, FIRE_DENIAL)]
