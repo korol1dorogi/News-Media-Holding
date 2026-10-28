@@ -31,8 +31,9 @@ check:
 fmt:
 	$(PY) -m ruff format . && $(PY) -m ruff check --fix .
 
-# API on :8000 and Vite on :5173; Ctrl+C stops both.
+# API on :8000 and Vite on :5173; Ctrl+C stops both. Builds the DB on the first run.
 run:
+	test -f $(DB_PATH) || $(PY) -m radar.pipeline
 	@trap 'kill 0' INT TERM; \
 	$(PY) -m uvicorn radar.api.app:app --port 8000 --reload --reload-dir radar & \
 	(cd frontend && npm run dev) & \

@@ -19,16 +19,16 @@
 |---|---|---|---|---|
 | L1 | каркас | — | make check зелёный | готово (#11) |
 | L2 | radar/core/*, radar/api/*, frontend/src/types.ts, frontend/src/api.ts, frontend/src/mock/* | L1 | API отдаёт ту же форму, что mock-JSON | готово (в L1) |
-| L3 | radar/pipeline.py, radar/storage.py | все Must-модули | make run поднимает всё, /api/replay/reset пересобирает базу | почти готово: pipeline и API работают на синтетике |
+| L3 | radar/pipeline.py, radar/storage.py | все Must-модули | make run поднимает всё, /api/replay/reset пересобирает базу | готово (в main) |
 | S1 | scripts/gen_synthetic.py, data/synthetic/* | контракт | генератор детерминирован, все события демо-сценария в truth.yaml | готово (#6) |
-| S2 | scripts/eval.py, reports/* (кроме reports/hard/ и reports/redteam.md) | S1, L3 | make eval пишет reports/metrics.json и metrics.md; максимум — в карточке | не начато |
+| S2 | scripts/eval.py, reports/* (кроме reports/hard/ и reports/redteam.md) | S1, L3 | make eval пишет reports/metrics.json и metrics.md; максимум — в карточке | готово (в main) |
 | S3 | scripts/gen_synthetic_hard.py, data/synthetic_hard/*, reports/hard/* | S1, S2 | хитрые фейки во втором городе, свой truth.yaml, отчёт S2 по ним в reports/hard/ | не начато |
 | C1 | radar/normalize/* | контракт | geo и topic совпадают с ожиданием на 20 постах | готово (#7) |
 | C2 | radar/cluster/* | C1 | каждое событие truth.yaml собрано в один кластер | готово (#8) |
 | C3 | radar/score/*, data/profiles/* | C2 | шум ниже событий, порядок для mash и life различается | готово (#9) |
 | C4 | radar/score/learn.py, data/labels/* | C3, S2 | логрегрессия на метках «опубликовано / нет» обучается детерминированно, S2 сравнивает её с ручными весами | не начато |
-| AI1 | radar/draft/generate.py, radar/llm/* (кроме `__init__.py`) | контракт | разные черновики для mash и life без сети и ключа; максимум — в карточке | не начато |
-| AI2 | radar/draft/claims.py | AI1 | на событии с inject_error ровно одно supported=false, на остальных ноль; максимум — в карточке | не начато |
+| AI1 | radar/draft/generate.py, radar/llm/* (кроме `__init__.py`) | контракт | разные черновики для mash и life без сети и ключа; максимум — в карточке | готово (в main) |
+| AI2 | radar/draft/claims.py | AI1 | на событии с inject_error ровно одно supported=false, на остальных ноль; максимум — в карточке | готово (в main) |
 | AI3 | tests/redteam/*.yaml, reports/redteam.md | AI2 | 20+ сценариев red team зелёные в make check, сводка в reports/redteam.md | не начато |
 | V1 | radar/verify/provenance.py | контракт | independent и first_source совпадают с truth.yaml | готово (#1) |
 | V2 | radar/verify/media.py | контракт | «наводнение» fail, пережатая и обрезанная копия находится | готово (#4) |
@@ -36,8 +36,8 @@
 | V4 | radar/verify/official.py, radar/verify/dossier.py | V1 | уровни досье совпадают с truth.yaml | готово (#2) |
 | V5 | radar/verify/watchdog.py | V4, L4 | событие, опровергнутое после публикации, видно в /api/alerts (реэкспорт в `verify/__init__.py` добавит лид) | не начато |
 | L4 | radar/api/*, radar/core/*, frontend/src/types.ts, frontend/src/api.ts, frontend/src/mock/* | L3 | /api/events/{id}/publish, /api/alerts, /api/replay/stream отдают фикстуры, тест на форму | не начато |
-| UX1 | frontend/src/App.tsx, frontend/src/components/*, frontend/src/pages/* (кроме Live.tsx и Quality.tsx) | mock-JSON | демо-сценарий проходится кликами; максимум — в карточке | не начато |
-| UX2 | frontend/src/components/RepostGraph.tsx | UX1, V1 | у «слуха» видно один первоисточник | не начато |
+| UX1 | frontend/src/App.tsx, frontend/src/components/*, frontend/src/pages/* (кроме Live.tsx и Quality.tsx) | mock-JSON | демо-сценарий проходится кликами; максимум — в карточке | готово (в main) |
+| UX2 | frontend/src/components/RepostGraph.tsx | UX1, V1 | у «слуха» видно один первоисточник | готово (в main) |
 | UX3 | frontend/src/pages/Live.tsx | UX1, L4 | на видео видно, через сколько минут ДТП поднялось в ленте и как «наводнение» краснеет | не начато |
 | UX4 | frontend/src/pages/Quality.tsx | UX1, S2 | страница показывает метрики из /api/metrics после make eval | не начато |
 

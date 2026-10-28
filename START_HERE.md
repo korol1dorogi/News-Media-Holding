@@ -17,7 +17,8 @@
 
 - `make run` — API на :8000 и интерфейс на http://localhost:5173. Ctrl+C гасит оба.
 - `.env.example` работает без правок: LLM — MockProvider, сеть не нужна.
-  `VITE_USE_MOCK=true` — фронт читает `frontend/src/mock`, `false` — живой API.
+  `VITE_USE_MOCK=false` (по умолчанию) — фронт ходит в живой API, `true` — читает
+  `frontend/src/mock` без бэкенда. `make run` сам собирает базу при первом запуске.
 
 ## 2. Как взять задачу
 
