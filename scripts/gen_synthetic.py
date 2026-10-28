@@ -656,8 +656,13 @@ def write_images(out: Path) -> None:
 # --- output ------------------------------------------------------------------------------------
 
 
+def write_text(path: Path, text: str) -> None:
+    """UTF-8 with LF on every OS, so committed files match a fresh run."""
+    path.write_text(text, encoding="utf-8", newline="\n")
+
+
 def write_json(path: Path, data: object) -> None:
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    write_text(path, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
 
 
 TRUTH_HEADER = """\
@@ -680,12 +685,12 @@ def generate(out: Path) -> None:
 
     write_json(out / "channels.json", chans)
     lines = [json.dumps(post, ensure_ascii=False) for post in posts]
-    (out / "posts.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    write_text(out / "posts.jsonl", "\n".join(lines) + "\n")
     write_json(out / "weather.json", WEATHER)
     dumped = yaml.safe_dump(
         truth(demos, ids), allow_unicode=True, sort_keys=False, default_flow_style=None, width=4096
     )
-    (out / "truth.yaml").write_text(TRUTH_HEADER + dumped, encoding="utf-8")
+    write_text(out / "truth.yaml", TRUTH_HEADER + dumped)
     write_images(out)
 
 
